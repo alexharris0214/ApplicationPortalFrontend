@@ -33,7 +33,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <p>You are on the home page after logging in! Welcome {user.data.email}</p>
+      <p>You are on the home page after logging in! Welcome</p>
       <div style={{ padding: '20px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
         <h1>Job Board</h1>
         <button className='style-button' onClick={openModal}>Create New Post</button>

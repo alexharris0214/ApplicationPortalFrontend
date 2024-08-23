@@ -68,8 +68,8 @@ const SignUp = () => {
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
             >
-                <option value="candidate">Candidate</option>
-                <option value="recruiter">Recruiter</option>
+                <option value="CANDIDATE">Candidate</option>
+                <option value="RECRUITER">Recruiter</option>
             </select>
             <button disabled={isLoading} type="submit">Sign Up</button>
             {formError && <div className='error'>{formError}</div>}

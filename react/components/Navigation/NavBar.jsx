@@ -25,7 +25,7 @@ return (
                                             </>
                                     ) : <><Link onClick={handleClick}>Log Out</Link></>}
                                     
-                                    <Link to="/"><h4>The Bulletin</h4></Link>
+                                    <Link to="/"><h4>Talent Manager</h4></Link>
 
                             </div>
                     </nav>

@@ -11,12 +11,14 @@ const useSignUp = () => {
     setIsLoading(true);
     setError(null);
 
+    let roleUpper = role.toUpperCase();
+
     const requestBody = {
       firstName,
       lastName,
       email,
       password,
-      role,
+      roleUpper,
     };
 
     // Log the request body
@@ -24,7 +26,7 @@ const useSignUp = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/users/register",
+        "http://localhost:8080/api/auth/register",
         requestBody
       );
 

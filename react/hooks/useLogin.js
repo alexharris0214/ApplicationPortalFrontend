@@ -12,10 +12,13 @@ const useLogin = () => {
     setError(null);
 
     try {
-      const response = await axios.post("http://localhost:3000/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/login",
+        {
+          email,
+          password,
+        }
+      );
       const json = response;
       console.log(json);
       if (json) {
