@@ -40,11 +40,11 @@ const HomePage = () => {
         <PostModal isOpen={isModalOpen} onClose={closeModal} />
       </div>
       <section className='feed'>
-        <div>
+        {/* <div>
           {data && data.map((item) => (
             <FeedCard key={item.id} data={item} fetchData={fetchData} />
           )).reverse()}
-        </div>
+        </div> */}
       </section>
     </div>
   );
