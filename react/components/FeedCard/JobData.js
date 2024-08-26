@@ -1,5 +1,6 @@
 export const jobData = [
   {
+    id: "uuid1",
     listingTitle: "Senior Software Engineer",
     jobTitle: "Full Stack Developer",
     managerId: 12345,
@@ -10,6 +11,7 @@ export const jobData = [
       "We are seeking a talented Full Stack Developer to join our team. You will be responsible for designing, developing, and maintaining our web applications...",
   },
   {
+    id:"uuid2",
     listingTitle: "Marketing Manager",
     jobTitle: "Digital Marketing Specialist",
     managerId: 67890,
@@ -20,6 +22,7 @@ export const jobData = [
       "We are looking for a creative and results-oriented Digital Marketing Specialist to join our marketing team. You will be responsible for developing and executing effective digital marketing campaigns...",
   },
   {
+    id:"uuid3",
     listingTitle: "Project Manager",
     jobTitle: "Scrum Master",
     managerId: 11111,
