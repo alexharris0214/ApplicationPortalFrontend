@@ -19,7 +19,7 @@ const useLogin = () => {
           password,
         }
       );
-      const json = response;
+      const json = response.data;
       console.log(json);
       if (json) {
         //save the user to local storage

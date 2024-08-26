@@ -11,14 +11,12 @@ const useSignUp = () => {
     setIsLoading(true);
     setError(null);
 
-    let roleUpper = role.toUpperCase();
-
     const requestBody = {
       firstName,
       lastName,
       email,
       password,
-      roleUpper,
+      role,
     };
 
     // Log the request body

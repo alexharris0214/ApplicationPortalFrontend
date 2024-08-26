@@ -8,7 +8,7 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [role, setRole] = useState('candidate'); 
+    const [role, setRole] = useState('CANDIDATE'); 
     const [formError, setFormError] = useState('');
     const { signup, error, isLoading } = useSignUp();
 
@@ -72,8 +72,8 @@ const SignUp = () => {
                 <option value="RECRUITER">Recruiter</option>
             </select>
             <button disabled={isLoading} type="submit">Sign Up</button>
-            {formError && <div className='error'>{formError}</div>}
-            {error && <div className='error'>{error}</div>}
+            {formError && <div className='error'>{formError.toString()}</div>}
+            {error && <div className='error'>{error.message}</div>}
         </form>
     );
 };
