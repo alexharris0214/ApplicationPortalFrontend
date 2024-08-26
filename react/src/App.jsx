@@ -10,6 +10,8 @@ import PrivateRouteSignUp from "../routes/PrivateRouteSignUp";
 import NavBar from "../components/Navigation/NavBar";
 import Error404Page from "../pages/Error404Page";
 import LandingPage from "../pages/Landing";
+import ManagerPage from "../pages/ManagerPage";
+import JobPostingEditor from "../pages/JobPostingEditor";
 
 function App() {
   
@@ -22,6 +24,8 @@ function App() {
             </header>
             <AppRoutes>
               <Route path="/" element={<LandingPage />} />
+              <Route path="/manager" element={<ManagerPage />}/>
+              <Route path="/manager/edit/:jobId" element={<JobPostingEditor />}/>
               <Route path="/home" element={<PrivateRoute />}>
                 <Route path="/home" element={<HomePage />} />
               </Route>

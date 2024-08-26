@@ -64,6 +64,7 @@ const SignUp = () => {
                 value={confirmPassword}
             />
             <label>Select Role:</label>
+            <div>
             <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
@@ -71,6 +72,7 @@ const SignUp = () => {
                 <option value="CANDIDATE">Candidate</option>
                 <option value="RECRUITER">Recruiter</option>
             </select>
+            </div>
             <button disabled={isLoading} type="submit">Sign Up</button>
             {formError && <div className='error'>{formError.toString()}</div>}
             {error && <div className='error'>{error.message}</div>}
