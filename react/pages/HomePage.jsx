@@ -1,47 +1,47 @@
-import React, { useState, useEffect ,useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import FeedCard from '../components/FeedCard/FeedCard';
-import PostModal from '../components/PostModal/PostModal';
-import { AuthContext } from '../context/AuthContext';
 import JobFeed from '../components/FeedCard/JobFeed';
+import CreateJobModal from '../components/PostModal/CreateJobModal'; // Updated import
+import { AuthContext } from '../context/AuthContext';
+
 const HomePage = () => {
   const [data, setData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useContext(AuthContext);
-  // Function to fetch data from the API
+
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/jobs");
+      const response = await axios.get("http://localhost:8081/api/jobs/open-jobs");
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
-  // Open the modal
   const openModal = () => setIsModalOpen(true);
 
-  // Close the modal and refetch data
   const closeModal = () => {
     setIsModalOpen(false);
-    fetchData();  // Refetch data when modal is closed
+    fetchData();
   };
 
-  // Fetch data on component mount
   useEffect(() => {
     fetchData();
   }, []);
 
   return (
     <div>
-      <p>You are on the home page after logging in! Welcome Candidate/Hiring Manager</p>
+      <p>You are on the home page after logging in! Welcome {user.role}</p>
       <div style={{ padding: '20px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
         <h1>Job Board</h1>
-        <button className='style-button' onClick={openModal}>Create New Post</button>
-        <PostModal isOpen={isModalOpen} onClose={closeModal} />
+        {user && user.role === 'RECRUITER' && (
+         <button className='style-button' onClick={openModal}>Create New Job</button>
+       )}
+       <CreateJobModal isOpen={isModalOpen} onClose={closeModal} /> 
+        
       </div>
       <section className='job-feed'>
-       <JobFeed/>
+        <JobFeed/>
       </section>
     </div>
   );
