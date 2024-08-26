@@ -30,7 +30,7 @@ export const jobData = [
     dateClosed: "2024-04-10",
     openStatus: "Closed",
     jobDescription:
-      "We are seeking a experienced Scrum Master to lead our agile development teams. You will be responsible for facilitating agile ceremonies, managing project backlogs, and ensuring project success...",
+      "We are seeking an experienced Scrum Master to lead our agile development teams. You will be responsible for facilitating agile ceremonies, managing project backlogs, and ensuring project success...",
   },
   // Add more job objects here
 ];
