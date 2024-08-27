@@ -1,14 +1,16 @@
 import React, { useState, useContext } from 'react';
-import JobApplication from '../JobApplication/JobApplication';
+import JobApplicationTrial from '../JobApplication/JobApplicationTrial';
 import EditJobModal from '../PostModal/EditJobModal';
+import ApplicantFeed from '../Applications/ApplicantFeed';
 import { AuthContext } from '../../context/AuthContext'; 
 import axios from 'axios';
-import JobApplicationTrial from '../JobApplication/JobApplicationTrial';
+
 const JobCard = ({ job, fetchData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isApplicantFeedOpen, setIsApplicantFeedOpen] = useState(false);
   const { user } = useContext(AuthContext);
-  console.log(job)
+
   const handleApplyClick = () => {
     setIsModalOpen(true);
   };
@@ -25,32 +27,27 @@ const JobCard = ({ job, fetchData }) => {
     setIsEditModalOpen(false);
     fetchData(); // Refresh job list after editing
   };
-  
-  const handleDelete = async (e) => {
-    // e.preventDefault();
-    // const requestBody = {
-    //   jobId: job.id
-    // };
-    // const headers = {
-    //   Authorization: "Bearer " + user.token
-    // }
-    // console.log(headers)
 
+  const handleDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8081/api/jobs/delete-job/${job.id}`, 
-          {headers: {
+      await axios.delete(`http://localhost:8081/api/jobs/delete-job/${job.id}`, {
+        headers: {
           Authorization: `Bearer ${user.token}`,
           'Content-Type': 'application/json',
         },
       });
-       // fetchData(); // Refresh job list after deleting
+      fetchData(); // Refresh job list after deleting
     } catch (error) {
       console.error('Error deleting job:', error);
     }
   };
 
   const viewApps = () => {
-    console.log("Viewing applications");
+    setIsApplicantFeedOpen(true);
+  };
+
+  const handleCloseApplicantFeed = () => {
+    setIsApplicantFeedOpen(false);
   };
 
   return (
@@ -63,7 +60,6 @@ const JobCard = ({ job, fetchData }) => {
       {job.dateClosed && <p><strong>Date Closed:</strong> {job.dateClosed ? new Date(job.dateClosed).toLocaleDateString() : 'N/A'}</p>}
       {job.openStatus && <p><strong>Status:</strong> {job.openStatus ? 'Open' : 'Closed'}</p>}
       {job.jobDescription && <p><strong>Description:</strong> {job.jobDescription}</p>}
-      {/* {job.selectedCandidateId && <p><strong>Selected Candidate ID:</strong> {job.selectedCandidateId}</p>} */}
 
       {user && user.role === 'RECRUITER' && (
         <div>
@@ -79,12 +75,10 @@ const JobCard = ({ job, fetchData }) => {
         </div>
       )}
 
-      {/* Conditionally render the Apply button */}
       {user && user.role === 'CANDIDATE' && (
-        <button onClick={handleApplyClick}>Apply</button>
+        <button onClick={handleApplyClick} className='style-button'>Apply</button>
       )}
 
-      {/* Job Application Modal */}
       {isModalOpen && (
         <JobApplicationTrial 
           job={job} 
@@ -92,7 +86,6 @@ const JobCard = ({ job, fetchData }) => {
         />
       )}
 
-      {/* Edit Job Modal */}
       {isEditModalOpen && (
         <EditJobModal
           isOpen={isEditModalOpen} 
@@ -101,6 +94,11 @@ const JobCard = ({ job, fetchData }) => {
         />
       )}
 
+      {isApplicantFeedOpen && (
+        <div className="modal" style={modalStyles}>
+          <ApplicantFeed jobId={job.id} onClose={handleCloseApplicantFeed} />
+        </div>
+      )}
     </div>
   );
 };
@@ -111,7 +109,20 @@ const styles = {
     border: '1px solid black',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     padding: '16px',
-  }
+  },
+};
+
+const modalStyles = {
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '16px',
 };
 
 export default JobCard;

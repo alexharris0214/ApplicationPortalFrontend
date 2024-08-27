@@ -3,6 +3,8 @@ import axios from 'axios';
 import JobFeed from '../components/FeedCard/JobFeed';
 import CreateJobModal from '../components/PostModal/CreateJobModal'; // Updated import
 import { AuthContext } from '../context/AuthContext';
+import MenuTabs from '../components/MenuTab/MenuTab';
+import MenuTabCandidate from '../components/MenuTab/MenuTabCandidate';
 
 const HomePage = () => {
   const [data, setData] = useState(null);
@@ -40,9 +42,20 @@ const HomePage = () => {
        <CreateJobModal isOpen={isModalOpen} onClose={closeModal} /> 
         
       </div>
-      <section className='job-feed'>
+
+      {/* <section className='job-feed'>
+          <JobFeed />
+        </section> */}
+      {user && user.role === 'CANDIDATE' ? (
+        <MenuTabCandidate/>
+      ) : <></>}
+      {
+      (user && user.role === 'RECRUITER' ?
+        <MenuTabs fetchData={fetchData} />:<></>
+      )}
+      {/* <section className='job-feed'>
         <JobFeed/>
-      </section>
+      </section> */}
     </div>
   );
 };

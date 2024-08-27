@@ -37,11 +37,11 @@ const CreateJobModal = ({ isOpen, onClose }) => {
         },
       });
 
-      // if (response.status === 201) {
-      //   alert('Job created successfully!');
-      // } else {
-      //   alert('Failed to create the job.');
-      // }
+      if (response.status === 200) {
+        alert('Job created successfully!');
+      } else {
+        alert('Failed to create the job.');
+      }
     } catch (error) {
       console.error('Error creating job:', error);
       alert('An error occurred while creating the job.');
