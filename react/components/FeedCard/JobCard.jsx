@@ -2,8 +2,9 @@ import React, { useState, useContext } from 'react';
 import JobApplication from '../JobApplication/JobApplication';
 import EditJobModal from '../PostModal/EditJobModal';
 import { AuthContext } from '../../context/AuthContext'; 
+import axios from 'axios';
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job, fetchData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { user } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const JobCard = ({ job }) => {
 
   const handleEditClick = () => {
     setIsEditModalOpen(true);
-  }
+  };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -22,20 +23,21 @@ const JobCard = ({ job }) => {
 
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
-  }
+    fetchData(); // Refresh job list after editing
+  };
 
-  const handleDelete = () => {
-    console.log("Deleting job");
-  }
-
-  // const handleEdit = () => {
-  //   console.log(job.id);
-  //   navigate(`/manager/edit/${job.id}`);
-  // }
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:8081/api/jobs/${job.id}`);
+      fetchData(); // Refresh job list after deleting
+    } catch (error) {
+      console.error('Error deleting job:', error);
+    }
+  };
 
   const viewApps = () => {
     console.log("Viewing applications");
-  }
+  };
 
   return (
     <div className="card" style={styles.card}>
@@ -51,15 +53,20 @@ const JobCard = ({ job }) => {
 
       {user && user.role === 'RECRUITER' && (
         <div>
-        <button onClick={handleDelete} className="style-button">
-        <strong>Delete Job Posting</strong></button>
-        <button onClick={handleEditClick} className='style-button' ><strong>Edit Job Postings</strong></button>
-        <button onClick={viewApps} className='style-button'><strong>View Applications</strong></button>
+          <button onClick={handleDelete} className="style-button">
+            <strong>Delete Job Posting</strong>
+          </button>
+          <button onClick={handleEditClick} className='style-button'>
+            <strong>Edit Job Postings</strong>
+          </button>
+          <button onClick={viewApps} className='style-button'>
+            <strong>View Applications</strong>
+          </button>
         </div>
       )}
 
       {/* Conditionally render the Apply button */}
-      {user && user.role==='CANDIDATE' && (
+      {user && user.role === 'CANDIDATE' && (
         <button onClick={handleApplyClick}>Apply</button>
       )}
 
@@ -71,12 +78,13 @@ const JobCard = ({ job }) => {
         />
       )}
 
-      {/*Edit Job Modal */}
+      {/* Edit Job Modal */}
       {isEditModalOpen && (
         <EditJobModal
-        isOpen ={isEditModalOpen} 
-        job={job}
-        onClose={handleCloseEditModal}/>
+          isOpen={isEditModalOpen} 
+          job={job}
+          onClose={handleCloseEditModal}
+        />
       )}
 
     </div>
@@ -90,13 +98,6 @@ const styles = {
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     padding: '16px',
   }
-  // ,
-  // button: {
-  //   backgroundColor: "white",
-  //   border: '1px solid black',
-  //   boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-  //   padding: '16px 32px'
-  // }
 };
 
 export default JobCard;

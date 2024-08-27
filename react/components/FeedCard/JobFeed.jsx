@@ -3,8 +3,10 @@ import axios from 'axios';
 import JobCard from './JobCard'; // Import the JobCard component
 import { jobData } from './JobData'; // Import the job data
 
+
 const JobFeed = () => {
   const [jobs, setJobs] = useState([]);
+
 
   // Function to fetch data from the API
   const fetchData = async () => {
@@ -16,19 +18,22 @@ const JobFeed = () => {
     }
   };
 
+
   // Fetch data on component mount
   useEffect(() => {
     fetchData();
   }, []);
 
+
   return (
     <div className="job-feed">
       {/* Map over the fetched jobs */}
       {jobs.map((job) => (
-        <JobCard key={job.id || job.listingTitle} job={job} /> // Use listingTitle as fallback for key
+        <JobCard key={job.id || job.listingTitle} job={job} fetchData={fetchData}/> // Use listingTitle as fallback for key
       ))}
     </div>
   );
 };
+
 
 export default JobFeed;
