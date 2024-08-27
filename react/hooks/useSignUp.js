@@ -35,10 +35,11 @@ const useSignUp = () => {
       const json = response.data;
       if (json) {
         // Save the user to local storage
-        localStorage.setItem("token", json.token);
+        localStorage.setItem("user", JSON.stringify(json));
+        //localStorage.setItem("token", json.token);
 
         // Update the auth context
-        dispatch({ type: "LOGIN", payload: { token: json.token } });
+        dispatch({ type: "LOGIN", payload: json });
       }
     } catch (error) {
       // Log the error message
