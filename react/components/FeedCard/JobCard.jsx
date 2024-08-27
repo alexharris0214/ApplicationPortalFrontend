@@ -27,7 +27,7 @@ const JobCard = ({ job, fetchData }) => {
   };
   
   const handleDelete = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     // const requestBody = {
     //   jobId: job.id
     // };
@@ -40,8 +40,8 @@ const JobCard = ({ job, fetchData }) => {
       const response = await axios.delete(`http://localhost:8081/api/jobs/delete-job/${job.id}`, 
           {headers: {
           Authorization: `Bearer ${user.token}`,
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
        // fetchData(); // Refresh job list after deleting
     } catch (error) {
