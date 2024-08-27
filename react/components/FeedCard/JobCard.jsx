@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import JobApplication from '../JobApplication/JobApplication';
+import EditJobModal from '../PostModal/EditJobModal';
 import { AuthContext } from '../../context/AuthContext'; 
 
 const JobCard = ({ job }) => {
@@ -18,6 +19,10 @@ const JobCard = ({ job }) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+  }
 
   const handleDelete = () => {
     console.log("Deleting job");
@@ -65,6 +70,15 @@ const JobCard = ({ job }) => {
           onClose={handleCloseModal} 
         />
       )}
+
+      {/*Edit Job Modal */}
+      {isEditModalOpen && (
+        <EditJobModal
+        isOpen ={isEditModalOpen} 
+        job={job}
+        onClose={handleCloseEditModal}/>
+      )}
+
     </div>
   );
 };

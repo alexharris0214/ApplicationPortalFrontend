@@ -1,12 +1,21 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 
-const EditJobModal = ({ isOpen, onClose }) => {
+const EditJobModal = ({ isOpen, job, onClose }) => {
   const [listingTitle, setListingTitle] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [jobDescription, setJobDescription] = useState('');
   const { user } = useContext(AuthContext);
+
+  // Autofill the form with existing job data when modal is opened
+  useEffect(() => {
+    if (job) {
+      setListingTitle(job.listingTitle || '');
+      setJobTitle(job.jobTitle || '');
+      setJobDescription(job.jobDescription || '');
+    }
+  }, [job]);
 
   if (!isOpen) return null;
 
@@ -18,45 +27,41 @@ const EditJobModal = ({ isOpen, onClose }) => {
       return;
     }
 
-    const jobData = {
+    const updatedJobData = {
       listingTitle,
       jobTitle,
       jobDescription,
-      dateListed: new Date(),
-      dateClosed: null,
+      dateListed: job.dateListed, // Preserve original date listed
+      dateClosed: job.dateClosed || null, // Preserve or update closure date
       managerId: user.userId, 
-      openStatus: true,
-      selectedCandidate: null,
+      openStatus: job.openStatus,
+      selectedCandidate: job.selectedCandidate || null,
     };
 
     try {
-      const response = await axios.post('http://localhost:8081/api/jobs/create-job', jobData, {
+      const response = await axios.patch(`http://localhost:8081/api/jobs/update-job`, updatedJobData, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           'Content-Type': 'application/json',
         },
       });
 
-      // if (response.status === 201) {
-      //   alert('Job created successfully!');
-      // } else {
-      //   alert('Failed to create the job.');
-      // }
+      // Success response handling
+      if (response.status === 200) {
+        alert('Job updated successfully!');
+      }
     } catch (error) {
-      console.error('Error creating job:', error);
-      alert('An error occurred while creating the job.');
+      console.error('Error updating job:', error);
+      alert('An error occurred while updating the job.');
     }
 
-    setListingTitle('');
-    setJobTitle('');
-    setJobDescription('');
-    onClose();
+    onClose(); // Close the modal after submission
   };
 
   return (
     <div style={styles.overlay}>
       <div style={styles.modal}>
-        <h2>Create a New Job</h2>
+        <h2>Edit Job</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -79,8 +84,8 @@ const EditJobModal = ({ isOpen, onClose }) => {
             rows="4"
             style={styles.textarea}
           />
-          <button type="submit" style={styles.button}>Create Job</button>
-          <button type="button" onClick={onClose} style={styles.button}>Close</button>
+          <button type="submit" style={styles.button}>Save Changes</button>
+          <button type="button" onClick={onClose} style={styles.button}>Cancel</button>
         </form>
       </div>
     </div>
@@ -114,7 +119,7 @@ const styles = {
     borderRadius: '4px',
   },
   textarea: {
-    width: '80%',
+    width: '100%',
     marginBottom: '10px',
     padding: '10px',
     border: '1px solid #ccc',
