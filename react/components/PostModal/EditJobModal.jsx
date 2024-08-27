@@ -6,6 +6,8 @@ const EditJobModal = ({ isOpen, job, onClose }) => {
   const [listingTitle, setListingTitle] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [jobDescription, setJobDescription] = useState('');
+  const [openStatus, setOpenStatus] = useState(false);
+  const [dateClosed, setDateClosed] = useState(null);
   const { user } = useContext(AuthContext);
 
   // Autofill the form with existing job data when modal is opened
@@ -14,6 +16,8 @@ const EditJobModal = ({ isOpen, job, onClose }) => {
       setListingTitle(job.listingTitle || '');
       setJobTitle(job.jobTitle || '');
       setJobDescription(job.jobDescription || '');
+      setOpenStatus(job.openStatus);
+      setDateClosed(job.dateClosed || '');
     }
   }, [job]);
 
@@ -28,34 +32,37 @@ const EditJobModal = ({ isOpen, job, onClose }) => {
     }
 
     const updatedJobData = {
-      listingTitle,
-      jobTitle,
-      jobDescription,
-      dateListed: job.dateListed, // Preserve original date listed
-      dateClosed: job.dateClosed || null, // Preserve or update closure date
-      managerId: user.userId, 
-      openStatus: job.openStatus,
-      selectedCandidate: job.selectedCandidate || null,
+      jobId: job.id, // Assuming job has an 'id' property
+      newJob: {
+        managerId: user.userId,
+        listingTitle,
+        dateListed: job.dateListed, // Preserve the original date listed
+        dateClosed: dateClosed || null, // Preserve or update the closure date
+        jobTitle,
+        openStatus,
+        jobDescription,
+        selectedCandidateId: job.selectedCandidateId || null, // If selected candidate is not available, it defaults to null
+      },
     };
 
     try {
-      const response = await axios.patch(`http://localhost:8081/api/jobs/update-job`, updatedJobData, {
+      const response = await axios.put(`http://localhost:8081/api/jobs/update-job`, updatedJobData, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           'Content-Type': 'application/json',
         },
       });
 
-      // Success response handling
       if (response.status === 200) {
         alert('Job updated successfully!');
+        onClose(); // Close the modal after submission
+      } else {
+        alert('Failed to update the job.');
       }
     } catch (error) {
       console.error('Error updating job:', error);
       alert('An error occurred while updating the job.');
     }
-
-    onClose(); // Close the modal after submission
   };
 
   return (
@@ -84,6 +91,26 @@ const EditJobModal = ({ isOpen, job, onClose }) => {
             rows="4"
             style={styles.textarea}
           />
+          <div>
+            <label>Status:</label>
+            <select
+              value={openStatus}
+              onChange={(e) => setOpenStatus(e.target.value === 'true')}
+              style={styles.input}
+            >
+              <option value={true}>Open</option>
+              <option value={false}>Closed</option>
+            </select>
+          </div>
+          <div>
+            <label>Date Closed:</label>
+            <input
+              type="date"
+              value={dateClosed ? new Date(dateClosed).toISOString().substr(0, 10) : ''}
+              onChange={(e) => setDateClosed(e.target.value)}
+              style={styles.input}
+            />
+          </div>
           <button type="submit" style={styles.button}>Save Changes</button>
           <button type="button" onClick={onClose} style={styles.button}>Cancel</button>
         </form>
