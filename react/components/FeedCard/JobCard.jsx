@@ -3,7 +3,7 @@ import JobApplication from '../JobApplication/JobApplication';
 import EditJobModal from '../PostModal/EditJobModal';
 import { AuthContext } from '../../context/AuthContext'; 
 import axios from 'axios';
-
+import JobApplicationTrial from '../JobApplication/JobApplicationTrial';
 const JobCard = ({ job, fetchData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -72,7 +72,7 @@ const JobCard = ({ job, fetchData }) => {
 
       {/* Job Application Modal */}
       {isModalOpen && (
-        <JobApplication 
+        <JobApplicationTrial 
           job={job} 
           onClose={handleCloseModal} 
         />
