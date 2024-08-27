@@ -8,7 +8,7 @@ const JobCard = ({ job, fetchData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { user } = useContext(AuthContext);
-
+  console.log(job)
   const handleApplyClick = () => {
     setIsModalOpen(true);
   };
@@ -25,11 +25,25 @@ const JobCard = ({ job, fetchData }) => {
     setIsEditModalOpen(false);
     fetchData(); // Refresh job list after editing
   };
+  
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    // const requestBody = {
+    //   jobId: job.id
+    // };
+    // const headers = {
+    //   Authorization: "Bearer " + user.token
+    // }
+    // console.log(headers)
 
-  const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8081/api/jobs/${job.id}`);
-      fetchData(); // Refresh job list after deleting
+      const response = await axios.delete(`http://localhost:8081/api/jobs/delete-job/${job.id}`, 
+          {headers: {
+          Authorization: `Bearer ${user.token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+       // fetchData(); // Refresh job list after deleting
     } catch (error) {
       console.error('Error deleting job:', error);
     }
