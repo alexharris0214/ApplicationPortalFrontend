@@ -1,6 +1,7 @@
 import React from "react";
 import { AuthContext } from '../context/AuthContext';
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
+import axios from "axios";
 
 const ProfilePage = () => {
     const { user } = useContext(AuthContext);
@@ -10,7 +11,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/users/', {
+        const response = await axios.get('http://localhost:8084/api/users/', {
           headers: {
             Authorization: `Bearer ${user.token}`, // Use token from user object
           },
@@ -28,7 +29,7 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <h1>Welcome, {userData.username}!</h1>
+      <h1>Welcome, {userData.firstName} {userData.lastName}!</h1>
       <p>Role: {user.role}</p>
       <p>Email: {userData.email}</p>
     </div>
