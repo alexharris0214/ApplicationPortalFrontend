@@ -27,12 +27,25 @@ const ProfilePage = () => {
 
   if (!userData) return <div>Loading...</div>;
 
+const styles = {
+    card: {
+      backgroundColor: 'white',
+      border: '1px solid black',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      padding: '16px',
+    },
+  };
+
   return (
-    <div>
-      <h1>Welcome, {userData.firstName} {userData.lastName}!</h1>
-      <p>Role: {user.role}</p>
-      <p>Email: {userData.email}</p>
-    </div>
+    <>
+    <div className="card" style={styles.card}>
+      <h1>Welcome, {userData.firstName}!</h1>
+      <p><strong>Role:</strong> {user.role}</p>
+      <p><strong>Email/Username:</strong> {userData.email}</p>
+      <p><strong>Full Name:</strong> {userData.firstName} {userData.lastName}</p>
+      <p><strong>Age:</strong> {userData.age} </p>
+      </div>
+      </>
   );
 };
 
