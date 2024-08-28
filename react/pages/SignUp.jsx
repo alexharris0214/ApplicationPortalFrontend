@@ -4,6 +4,8 @@ import validation from '../validation.js';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -47,6 +49,20 @@ const SignUp = () => {
                 type="email"
                 placeholder="Email"
                 onChange={(e) => setEmail(e.target.value)}
+                value={email}
+            />
+            <label>Phone Number:</label>
+            <input
+                type="text"
+                placeholder="123-456-7890"
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                value={email}
+            />
+            <label>Address:</label>
+            <input
+                type="text"
+                placeholder="Address"
+                onChange={(e) => setAddress(e.target.value)}
                 value={email}
             />
             <label>Password:</label>
