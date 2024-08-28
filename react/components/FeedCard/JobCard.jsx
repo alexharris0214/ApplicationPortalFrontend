@@ -52,12 +52,13 @@ const JobCard = ({ job, fetchData }) => {
 
   return (
     <div className="card" style={styles.card}>
-      {job.id && <h3>Job ID: {job.id}</h3>}
+      {/* {job.id && <h3>Job ID: {job.id}</h3>} */}
       {job.listingTitle && <h3>{job.listingTitle}</h3>}
-      {job.jobTitle && <h3>{job.jobTitle}</h3>}
-      {job.managerId && <p><strong>Manager ID:</strong> {job.managerId}</p>}
+      {job.jobTitle && <h3><strong>Position Title:</strong> {job.jobTitle}</h3>}
+      {/* {job.managerId && <p><strong>Manager ID:</strong> {job.managerId}</p>} */}
       {job.dateListed && <p><strong>Date Listed:</strong> {new Date(job.dateListed).toLocaleDateString()}</p>}
       {job.dateClosed && <p><strong>Date Closed:</strong> {job.dateClosed ? new Date(job.dateClosed).toLocaleDateString() : 'N/A'}</p>}
+      {job.positionCategory && <p><strong>Category:</strong> {job.positionCategory}</p>}
       {job.openStatus && <p><strong>Status:</strong> {job.openStatus ? 'Open' : 'Closed'}</p>}
       {job.jobDescription && <p><strong>Description:</strong> {job.jobDescription}</p>}
 

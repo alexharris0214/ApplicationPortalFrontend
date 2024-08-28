@@ -56,14 +56,14 @@ const SignUp = () => {
                 type="text"
                 placeholder="123-456-7890"
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                value={email}
+                value={phoneNumber}
             />
             <label>Address:</label>
             <input
                 type="text"
                 placeholder="Address"
                 onChange={(e) => setAddress(e.target.value)}
-                value={email}
+                value={address}
             />
             <label>Password:</label>
             <input

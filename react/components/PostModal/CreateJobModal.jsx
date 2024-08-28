@@ -6,6 +6,9 @@ const CreateJobModal = ({ isOpen, onClose }) => {
   const [listingTitle, setListingTitle] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [jobDescription, setJobDescription] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [positionCategory, setPositionCategory] = useState('');
   const { user } = useContext(AuthContext);
 
   if (!isOpen) return null;
@@ -22,6 +25,9 @@ const CreateJobModal = ({ isOpen, onClose }) => {
       listingTitle,
       jobTitle,
       jobDescription,
+      city,
+      state,
+      positionCategory,
       dateListed: new Date(),
       dateClosed: null,
       managerId: user.userId, 
@@ -50,6 +56,9 @@ const CreateJobModal = ({ isOpen, onClose }) => {
     setListingTitle('');
     setJobTitle('');
     setJobDescription('');
+    setCity('');
+    setState('');
+    setPositionCategory('');
     onClose();
   };
 
@@ -72,6 +81,34 @@ const CreateJobModal = ({ isOpen, onClose }) => {
             placeholder="Enter Job Title"
             style={styles.input}
           />
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder="Enter City"
+            style={styles.input}
+          />
+          <input
+            type="text"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            placeholder="Enter State"
+            style={styles.input}
+          />
+
+          {/* Dropdown for Position Category */}
+          <select
+            value={positionCategory}
+            onChange={(e) => setPositionCategory(e.target.value)}
+            style={styles.input}
+          >
+            <option value="">Select Position Category</option>
+            <option value="DEVELOPER">Developer</option>
+            <option value="SALES">Sales</option>
+            <option value="HR">HR</option>
+            <option value="OPERATIONS">Operations</option>
+          </select>
+
           <textarea
             value={jobDescription}
             onChange={(e) => setJobDescription(e.target.value)}
