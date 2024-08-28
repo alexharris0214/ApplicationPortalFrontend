@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes as AppRoutes } from "react-router-dom";
 import "./App.css";
-import AdminDasboard from "../components/Admin/AdminDashboard";
+import AdminDashboard from "../components/Admin/AdminDashboard";
 import HomePage from "../pages/HomePage";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
@@ -13,7 +13,6 @@ import Error404Page from "../pages/Error404Page";
 import LandingPage from "../pages/Landing";
 import ManagerPage from "../pages/ManagerPage";
 import JobPostingEditor from "../pages/JobPostingEditor";
-import ProfilePage from "../pages/ProfilePage";
 
 function App() {
   
@@ -26,11 +25,14 @@ function App() {
             </header>
             <AppRoutes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="/myprofilepage" element={<ProfilePage />} />
               <Route path="/manager" element={<ManagerPage />}/>
               <Route path="/manager/edit/:jobId" element={<JobPostingEditor />}/>
 
-              <Route path='/admin' element={<AdminDasboard />}/>
+              <Route path='/admin' element={<PrivateRoute />}>
+                <Route path='/admin' element={<AdminDashboard />}/>
+              </Route>
+
+
 
               <Route path="/home" element={<PrivateRoute />}>
                 <Route path="/home" element={<HomePage />} />
