@@ -13,6 +13,7 @@ import Error404Page from "../pages/Error404Page";
 import LandingPage from "../pages/Landing";
 import ManagerPage from "../pages/ManagerPage";
 import JobPostingEditor from "../pages/JobPostingEditor";
+import ProfilePage from "../pages/ProfilePage";
 
 function App() {
   
@@ -31,6 +32,8 @@ function App() {
               <Route path='/admin' element={<PrivateRoute />}>
                 <Route path='/admin' element={<AdminDashboard />}/>
               </Route>
+
+              <Route path='myprofilepage' element={<ProfilePage/>}/>
 
 
 

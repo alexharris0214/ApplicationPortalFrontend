@@ -8,9 +8,6 @@ const FeedCard = (props) => {
     const [isDeleted, setIsDeleted] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-    if (user && user.data && user.data.token) {
-        console.log(user.data.token);
-    }
 
     const handleDelete = async (id) => {
         if (!user || isDeleted) return;
@@ -24,7 +21,6 @@ const FeedCard = (props) => {
 
             alert('Post has been deleted.');
             setIsDeleted(true);
-            console.log(response.data);
             props.fetchData(); // Refetch data after deletion
         } catch (error) {
             console.error('Error deleting post:', error);
@@ -33,7 +29,7 @@ const FeedCard = (props) => {
     };
 
     if (isDeleted) return null;
-    console.log("props:", props);
+
 
     return (
         <div className="card" style={styles.card}>

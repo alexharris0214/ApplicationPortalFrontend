@@ -110,6 +110,8 @@ const styles = {
     border: '1px solid black',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     padding: '16px',
+    margin:'12px',
+    borderRadius:"12px"
   },
 };
 

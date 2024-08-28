@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 
 const JobPostingEditor = () => {
     const { jobId } = useParams();
-    console.log(jobId);
+
     // const [jobs, setJobs] = useState([]);
 
     // useEffect(() => {

@@ -96,7 +96,7 @@ const CreateJobModal = ({ isOpen, onClose }) => {
             style={styles.input}
           />
 
-          {/* Dropdown for Position Category */}
+
           <select
             value={positionCategory}
             onChange={(e) => setPositionCategory(e.target.value)}

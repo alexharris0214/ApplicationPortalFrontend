@@ -20,7 +20,7 @@ const useLogin = () => {
         }
       );
       const json = response.data;
-      console.log(json);
+
       if (json) {
         //save the user to local storage
         localStorage.setItem("user", JSON.stringify(json));

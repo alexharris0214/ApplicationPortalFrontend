@@ -6,16 +6,16 @@ const ManagerJobCard = ({ job }) => {
     const navigate = useNavigate();
 
     function handleDelete() {
-        console.log("Deleting job");
+
     }
 
     function handleEdit() {
-        console.log(job.id);
+
         navigate(`/manager/edit/${job.id}`);
     }
 
     function viewApps() {
-        console.log(job);
+
     }
 
   return (

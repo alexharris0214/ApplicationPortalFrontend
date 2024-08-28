@@ -5,7 +5,6 @@ import axios from "axios";
 
 const ProfilePage = () => {
     const { user } = useContext(AuthContext);
-    console.log(user);
     const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -16,6 +15,7 @@ const ProfilePage = () => {
             Authorization: `Bearer ${user.token}`, // Use token from user object
           },
         });
+        console.log(response.data)
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
