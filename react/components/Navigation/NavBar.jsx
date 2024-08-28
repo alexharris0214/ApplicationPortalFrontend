@@ -31,7 +31,7 @@ return (
                                         <Link to="/myprofilepage">My Profile</Link>
                                         </>}
                                     
-                                    <Link to="/"><h4>Talent Manager</h4></Link>
+                                        {!user ? (<Link to="/"><h4>Talent Manager</h4></Link>):<Link to="/home"><h4>Talent Manager</h4></Link>}
 
                             </div>
                     </nav>
