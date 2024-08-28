@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import JobCard from './JobCard'; // Import the JobCard component
 import { jobData } from './JobData'; // Import the job data
+import StateDropdown from '../JobApplication/StateDropDown';
 
 
 const JobFeed = () => {
   const [jobs, setJobs] = useState([]);
   const [jobTitle, setJobTitle] = useState('');
+  const [jobState, setJobState] = useState('');
+  const [jobCategory, setJobCategory] = useState('');
   const [filteredJobs, setFilteredJobs] = useState([]);
 
-  // Function to fetch data from the API
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8081/api/jobs/open-jobs");
@@ -32,12 +34,6 @@ const JobFeed = () => {
     setFilteredJobs(filtered);
   };
 
-  // const filteredJobs = jobs.filter((job) =>
-  //   job.jobTitle.toLowerCase().includes(jobTitle.toLowerCase())
-  // );
-
-
-  // Fetch data on component mount
   useEffect(() => {
     fetchData();
   }, []);
@@ -45,15 +41,6 @@ const JobFeed = () => {
 
   return (
     <div className="job-feed">
-      {/* Search by Job Title */}
-      {/* <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search by Job Title"
-          value={jobTitle}
-          onChange={handleJobTitleChange}
-        />
-      </div> */}
       <form onSubmit={handleSearchSubmit}>
         <div className="search-container">
           <input
@@ -62,14 +49,19 @@ const JobFeed = () => {
             value={jobTitle}
             onChange={handleJobTitleChange}
           />
+          <StateDropdown
+            setStateSetter={setJobState}
+            placeholder = {"Search By state"}
+          /> 
+          {/* <CategoryDropdown>
+            setStateSetter={}  
+          </CategoryDropdown>          */}
           <button type="submit">Search</button>
         </div>
       </form>
 
-
-      {/* Map over the fetched jobs */}
       {filteredJobs.map((job) => (
-        <JobCard key={job.id || job.listingTitle} job={job} fetchData={fetchData}/> // Use listingTitle as fallback for key
+        <JobCard key={job.id || job.listingTitle} job={job} fetchData={fetchData}/>
       ))}
     </div>
   );

@@ -86,6 +86,7 @@ const CreateJobModal = ({ isOpen, onClose }) => {
 
           <StateDropdown
             setStateSetter = {setState}
+            placeholder={"Select a state"}
           />
           <input
             type="text"
