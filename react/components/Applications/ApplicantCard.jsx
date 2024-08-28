@@ -2,8 +2,7 @@ import React from 'react';
 
 const ApplicantCard = ({ applicant, onSelect }) => {
   const handleSelect = () => {
-    console.log('Candidate Selected');
-    onSelect(applicant.id); // Optionally pass the applicant ID or other details
+    onSelect(applicant.userId); // Call the passed in onSelect function with the applicant's ID
   };
 
   return (

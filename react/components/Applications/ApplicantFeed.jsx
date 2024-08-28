@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import ApplicantCard from "./ApplicantCard";
 import { AuthContext } from "../../context/AuthContext";
@@ -6,6 +6,7 @@ import { AuthContext } from "../../context/AuthContext";
 const ApplicantFeed = ({ jobId, onClose }) => {
   const [applicants, setApplicants] = useState([]);
   const { user } = useContext(AuthContext);
+
   useEffect(() => {
     const fetchApplicants = async () => {
       try {
@@ -25,17 +26,39 @@ const ApplicantFeed = ({ jobId, onClose }) => {
     };
 
     fetchApplicants();
-  }, [jobId]);
+  }, [jobId, user.token]);
+
+  const handleSelectCandidate = async (candidateId) => {
+    try {
+      console.log(`Selecting candidate with ID: ${candidateId}`);
+      const response = await axios.patch(
+        'http://localhost:8081/api/jobs/select-candidate',
+        {
+          jobId: jobId,
+          candidateId: candidateId,
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${user.token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log('Candidate selected successfully:', response.data);
+      // Optionally, update the state to reflect the selected candidate
+    } catch (error) {
+      console.error('Error selecting candidate:', error);
+    }
+  };
 
   return (
     <div className="applicant-feed" style={feedStyles}>
-      
       {applicants.length > 0 ? (
         applicants.map((applicant) => (
           <ApplicantCard
             key={applicant.id}
             applicant={applicant}
-            onSelect={(id) => console.log(`Selected Applicant ID: ${id}`)}
+            onSelect={handleSelectCandidate} // Pass the selection handler to ApplicantCard
           />
         ))
       ) : (

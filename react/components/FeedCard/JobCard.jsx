@@ -61,7 +61,7 @@ const JobCard = ({ job, fetchData }) => {
       {job.openStatus && <p><strong>Status:</strong> {job.openStatus ? 'Open' : 'Closed'}</p>}
       {job.jobDescription && <p><strong>Description:</strong> {job.jobDescription}</p>}
 
-      {user && user.role === 'RECRUITER' && (
+      {user && user.role === 'RECRUITER' && user.userId === job.managerId ?(
         <div>
           <button onClick={handleDelete} className="style-button">
             Delete Job Posting
@@ -73,7 +73,7 @@ const JobCard = ({ job, fetchData }) => {
             View Applications
           </button>
         </div>
-      )}
+      ):<></>}
 
       {user && user.role === 'CANDIDATE' && (
         <button onClick={handleApplyClick} className='style-button'>Apply</button>
