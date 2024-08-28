@@ -32,7 +32,7 @@ const CreateJobModal = ({ isOpen, onClose }) => {
       dateClosed: null,
       managerId: user.userId, 
       openStatus: true,
-      selectedCandidate: null,
+      selectedCandidate: null
     };
 
     try {
