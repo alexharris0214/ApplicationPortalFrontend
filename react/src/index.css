@@ -154,11 +154,13 @@ input.error {
   background-color: var(--primary); /* Replace with your preferred color */
   padding: 15px 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: "100%";
 }
 
 .navbar-container {
   display: flex;
   justify-content: space-between;
+  flex-direction: row;
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;

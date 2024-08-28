@@ -18,12 +18,12 @@ import ProfilePage from "../pages/ProfilePage";
 function App() {
   
   return (
-    <>
+
        <AuthContextProvider>
-          <div className="App">
-            <header >
+          <div>
+
               <NavBar />
-            </header>
+
             <AppRoutes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/manager" element={<ManagerPage />}/>
@@ -51,7 +51,7 @@ function App() {
             </AppRoutes>
           </div>
       </AuthContextProvider>
-    </>
+
   )
 }
 
