@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import JobFeed from '../components/FeedCard/JobFeed';
-import CreateJobModal from '../components/PostModal/CreateJobModal'; // Updated import
+import CreateJobModal from '../components/PostModal/CreateJobModal';
 import { AuthContext } from '../context/AuthContext';
 import MenuTabs from '../components/MenuTab/MenuTab';
 import MenuTabCandidate from '../components/MenuTab/MenuTabCandidate';
@@ -30,12 +30,12 @@ const HomePage = () => {
     }
   };
 
-  const openModal = () => setIsModalOpen(true);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => {
+        setIsModalOpen(false);
+        fetchData();
+    };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    fetchData();
-  };
 
   useEffect(() => {
     fetchData();

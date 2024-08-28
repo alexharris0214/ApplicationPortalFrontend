@@ -14,7 +14,7 @@ const AdminDashboard = () => {
         address: '',
         age: '',
         password: '',
-        role: 'RECRUITER'
+        // role: 'RECRUITER'
     });
     const [message, setMessage] = useState('');
 
