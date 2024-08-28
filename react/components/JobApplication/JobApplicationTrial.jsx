@@ -37,7 +37,7 @@ const JobApplicationTrial = ({ job, onClose }) => {
         console.log('Uploading resume to S3...');
         await axios.put(presignedUrl, resumeFile, {
           headers: {
-            'Content-Type': "multipart/form-data",
+            'Content-Type': resumeFile.type,
           },
         });
         console.log('Resume uploaded to S3 successfully.');

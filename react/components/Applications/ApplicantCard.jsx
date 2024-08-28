@@ -10,8 +10,13 @@ const ApplicantCard = ({ applicant, onSelect }) => {
     <div className="applicant-card" style={styles.card}>
       <p><strong>User ID:</strong> {applicant.userId}</p>
       <p><strong>Cover Letter:</strong> {applicant.coverLetter}</p>
-      <p><strong>Resume:</strong> {applicant.resume}</p>
-      <button onClick={handleSelect} className='style-button'>
+      <p><strong>Resume:</strong></p>
+      <a href={applicant.resume} download target="_blank" rel="noopener noreferrer">
+        <button className="style-button">
+          <strong>Download Resume</strong>
+        </button>
+      </a>
+      <button onClick={handleSelect} className="style-button">
         <strong>Select Candidate</strong>
       </button>
     </div>

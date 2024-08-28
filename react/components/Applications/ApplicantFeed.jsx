@@ -29,9 +29,7 @@ const ApplicantFeed = ({ jobId, onClose }) => {
 
   return (
     <div className="applicant-feed" style={feedStyles}>
-      <button onClick={onClose} className="style-button">
-        <strong>Close</strong>
-      </button>
+      
       {applicants.length > 0 ? (
         applicants.map((applicant) => (
           <ApplicantCard
@@ -43,6 +41,9 @@ const ApplicantFeed = ({ jobId, onClose }) => {
       ) : (
         <p>No applicants found.</p>
       )}
+      <button onClick={onClose} className="style-button">
+        <strong>Close</strong>
+      </button>
     </div>
   );
 };
