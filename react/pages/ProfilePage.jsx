@@ -40,9 +40,10 @@ const styles = {
     <>
     <div className="card" style={styles.card}>
       <h1>Welcome, {userData.firstName}!</h1>
+      <p><strong>Full Name:</strong> {userData.firstName} {userData.lastName}</p>
       <p><strong>Role:</strong> {user.role}</p>
       <p><strong>Email/Username:</strong> {userData.email}</p>
-      <p><strong>Full Name:</strong> {userData.firstName} {userData.lastName}</p>
+      <p><strong>Phone Number:</strong> {userData.phoneNumber}</p>
       <p><strong>Age:</strong> {userData.age} </p>
       </div>
       </>
