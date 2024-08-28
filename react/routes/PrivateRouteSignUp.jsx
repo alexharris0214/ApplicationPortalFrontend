@@ -9,7 +9,7 @@ const PrivateRouteSignUp = () => {
       return <Navigate to="/admin"/>
     }
   }
-  return user ? <Navigate to="/home" />: <Outlet />  ;
+  return user ? <Navigate to="/home" />: <Outlet /> 
 };
 
 export default PrivateRouteSignUp;

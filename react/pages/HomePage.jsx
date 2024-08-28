@@ -10,11 +10,20 @@ const HomePage = () => {
   const [data, setData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useContext(AuthContext);
-  console.log(user);
+  const [loggedInUser, setLoggedInUser] = useState({});
+
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8081/api/jobs/open-jobs");
+      console.log(user.token)
+      const response2 = await axios.get("http://localhost:8084/api/users/", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+      })
       setData(response.data);
+      setLoggedInUser(response2);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -33,7 +42,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <p>You are on the home page after logging in! Welcome {user.role}</p>
+      <p>You are on the home page after logging in! Welcome {loggedInUser.firstName}</p>
       <div style={{ padding: '20px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
         <h1>Job Board</h1>
         {user && user.role === 'RECRUITER' && (

@@ -23,7 +23,7 @@ const AdminDashboard = () => {
             try {
                 const response = await fetch('http://localhost:8084/api/users/get-all', {
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        'Authorization': `Bearer ${user.token}`
                     }
                 });
                 const data = await response.json();
