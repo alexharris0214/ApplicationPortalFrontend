@@ -27,8 +27,9 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/manager" element={<ManagerPage />}/>
               <Route path="/manager/edit/:jobId" element={<JobPostingEditor />}/>
-              {/* Admin page route */}
+
               <Route path='/admin' element={<AdminDasboard />}/>
+
               <Route path="/home" element={<PrivateRoute />}>
                 <Route path="/home" element={<HomePage />} />
               </Route>
