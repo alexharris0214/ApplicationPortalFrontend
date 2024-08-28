@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
+import StateDropdown from '../JobApplication/StateDropDown';
 
 const CreateJobModal = ({ isOpen, onClose }) => {
   const [listingTitle, setListingTitle] = useState('');
@@ -81,18 +82,16 @@ const CreateJobModal = ({ isOpen, onClose }) => {
             placeholder="Enter Job Title"
             style={styles.input}
           />
+          
+
+          <StateDropdown
+            setStateSetter = {setState}
+          />
           <input
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             placeholder="Enter City"
-            style={styles.input}
-          />
-          <input
-            type="text"
-            value={state}
-            onChange={(e) => setState(e.target.value)}
-            placeholder="Enter State"
             style={styles.input}
           />
 
