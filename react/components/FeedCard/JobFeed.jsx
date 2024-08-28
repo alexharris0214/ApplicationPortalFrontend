@@ -7,13 +7,14 @@ import { jobData } from './JobData'; // Import the job data
 const JobFeed = () => {
   const [jobs, setJobs] = useState([]);
   const [jobTitle, setJobTitle] = useState('');
-
+  const [filteredJobs, setFilteredJobs] = useState([]);
 
   // Function to fetch data from the API
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8081/api/jobs/open-jobs");
       setJobs(response.data);
+      setFilteredJobs(response.data);
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
@@ -23,9 +24,17 @@ const JobFeed = () => {
     setJobTitle(e.target.value);
   };
 
-  const filteredJobs = jobs.filter((job) =>
-    job.jobTitle.toLowerCase().includes(jobTitle.toLowerCase())
-  );
+  const handleSearchSubmit = (e) => {
+    e.preventDefault(); // Prevent form submission
+    const filtered = jobs.filter((job) =>
+      job.jobTitle.toLowerCase().includes(jobTitle.toLowerCase())
+    );
+    setFilteredJobs(filtered);
+  };
+
+  // const filteredJobs = jobs.filter((job) =>
+  //   job.jobTitle.toLowerCase().includes(jobTitle.toLowerCase())
+  // );
 
 
   // Fetch data on component mount
@@ -37,14 +46,25 @@ const JobFeed = () => {
   return (
     <div className="job-feed">
       {/* Search by Job Title */}
-      <div className="search-container">
+      {/* <div className="search-container">
         <input
           type="text"
           placeholder="Search by Job Title"
           value={jobTitle}
           onChange={handleJobTitleChange}
         />
-      </div>
+      </div> */}
+      <form onSubmit={handleSearchSubmit}>
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search by Job Title"
+            value={jobTitle}
+            onChange={handleJobTitleChange}
+          />
+          <button type="submit">Search</button>
+        </div>
+      </form>
 
 
       {/* Map over the fetched jobs */}
