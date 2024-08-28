@@ -14,7 +14,7 @@ const AdminDashboard = () => {
         address: '',
         age: '',
         password: '',
-        role: 'RECRUITER'
+        // role: 'RECRUITER'
     });
     const [message, setMessage] = useState('');
 
@@ -23,7 +23,7 @@ const AdminDashboard = () => {
             try {
                 const response = await fetch('http://localhost:8084/api/users/get-all', {
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
                     }
                 });
                 const data = await response.json();
