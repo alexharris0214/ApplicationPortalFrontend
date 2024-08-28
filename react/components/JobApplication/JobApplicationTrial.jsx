@@ -5,7 +5,6 @@ import { AuthContext } from '../../context/AuthContext';
 const JobApplicationTrial = ({ job, onClose }) => {
   const [coverLetter, setCoverLetter] = useState('');
   const [resumeFile, setResumeFile] = useState(null); // Use to store the file
-  const [resumeUrl, setResumeUrl] = useState(''); // Use to store the S3 URL after upload
   const { user } = useContext(AuthContext);
 
   const handleFileChange = (e) => {
@@ -19,6 +18,8 @@ const JobApplicationTrial = ({ job, onClose }) => {
       alert('You must be logged in to apply.');
       return;
     }
+
+    let uploadedFileUrl = ''; // Local variable for the resume URL
 
     if (resumeFile) {
       try {
@@ -42,8 +43,7 @@ const JobApplicationTrial = ({ job, onClose }) => {
         console.log('Resume uploaded to S3 successfully.');
 
         // Extract the file URL from the presigned URL (depends on how your backend generates it)
-        const uploadedFileUrl = presignedUrl.split('?')[0];
-        setResumeUrl(uploadedFileUrl);
+        uploadedFileUrl = presignedUrl.split('?')[0];
         console.log('Uploaded file URL:', uploadedFileUrl);
 
       } catch (error) {
@@ -57,7 +57,7 @@ const JobApplicationTrial = ({ job, onClose }) => {
       jobId: job.id,
       dateApplied: new Date().toISOString(),
       coverLetter,
-      resume: resumeUrl, // Use the S3 URL for the resume
+      resume: uploadedFileUrl, // Use the local variable for the resume URL
       open: true,
     };
 
