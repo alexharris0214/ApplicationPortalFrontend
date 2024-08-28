@@ -6,6 +6,7 @@ import { jobData } from './JobData'; // Import the job data
 
 const JobFeed = () => {
   const [jobs, setJobs] = useState([]);
+  const [jobTitle, setJobTitle] = useState('');
 
 
   // Function to fetch data from the API
@@ -18,6 +19,14 @@ const JobFeed = () => {
     }
   };
 
+  const handleJobTitleChange = (e) => {
+    setJobTitle(e.target.value);
+  };
+
+  const filteredJobs = jobs.filter((job) =>
+    job.jobTitle.toLowerCase().includes(jobTitle.toLowerCase())
+  );
+
 
   // Fetch data on component mount
   useEffect(() => {
@@ -27,8 +36,19 @@ const JobFeed = () => {
 
   return (
     <div className="job-feed">
+      {/* Search by Job Title */}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search by Job Title"
+          value={jobTitle}
+          onChange={handleJobTitleChange}
+        />
+      </div>
+
+
       {/* Map over the fetched jobs */}
-      {jobs.map((job) => (
+      {filteredJobs.map((job) => (
         <JobCard key={job.id || job.listingTitle} job={job} fetchData={fetchData}/> // Use listingTitle as fallback for key
       ))}
     </div>
