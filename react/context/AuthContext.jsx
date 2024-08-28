@@ -17,12 +17,6 @@ export const authReducer = (state,action) => {
 // Create the authentication provider component
 export const AuthContextProvider = ({ children }) => {
     const [state,dispatch]= useReducer(authReducer,{user:null})
-
-    console.log('AuthContext State:',state)
-    
-
-
-    // Render the authentication provider with the provided children
     return (
         <AuthContext.Provider value={{...state,dispatch}}>
             {children}

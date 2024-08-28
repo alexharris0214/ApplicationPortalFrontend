@@ -15,15 +15,16 @@ const HomePage = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8081/api/jobs/open-jobs");
-      console.log(user.token)
+
       const response2 = await axios.get("http://localhost:8084/api/users/", {
         headers: {
           Authorization: `Bearer ${user.token}`,
           "Content-Type": "application/json",
         },
       })
+
       setData(response.data);
-      setLoggedInUser(response2);
+      setLoggedInUser(response2.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -38,11 +39,12 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchData();
+    console.log(loggedInUser)
   }, []);
-
+  
   return (
     <div>
-      <p>You are on the home page after logging in! Welcome {loggedInUser.firstName}</p>
+      <p>Welcome {loggedInUser.firstName}</p>
       <div style={{ padding: '20px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
         <h1>Job Board</h1>
         {user && user.role === 'RECRUITER' && (
