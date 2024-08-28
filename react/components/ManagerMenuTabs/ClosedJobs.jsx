@@ -15,7 +15,10 @@ const ClosedJobs = () => {
           "Content-Type": "application/json",
         },
       });
-      setJobs(response.data);
+
+      // Filter jobs where managerId matches userId from AuthContext
+      const filteredJobs = response.data.filter(job => job.managerId === user.userId);
+      setJobs(filteredJobs);
     } catch (error) {
       console.error("Error fetching closed jobs:", error);
     }

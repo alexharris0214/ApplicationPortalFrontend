@@ -5,38 +5,46 @@ import { AuthContext } from "../../context/AuthContext";
 
 const ApplicantFeed = ({ jobId, onClose }) => {
   const [applicants, setApplicants] = useState([]);
+  const [selectedCandidateId, setSelectedCandidateId] = useState(null);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchApplicants = async () => {
+    const fetchJobAndApplicants = async () => {
       try {
-        const response = await axios.get(
+        // Fetch job data to get the selectedCandidateId
+        const jobResponse = await axios.get(`http://localhost:8081/api/jobs/${jobId}`, {
+          headers: {
+            'Authorization': `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        setSelectedCandidateId(jobResponse.data?jobResponse.data.selectedCandidateId:null);
+
+        // Fetch applicants
+        const applicantsResponse = await axios.get(
           `http://localhost:8082/api/applications/get-for-job/${jobId}`,
           {
             headers: {
-              'Authorization': `Bearer ${user.token}`, // Assuming user.token contains the JWT
+              'Authorization': `Bearer ${user.token}`,
               "Content-Type": "application/json",
             },
           }
         );
-        setApplicants(response.data);
+        setApplicants(applicantsResponse.data);
       } catch (error) {
-        console.error("Error fetching applicants:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchApplicants();
+    fetchJobAndApplicants();
   }, [jobId, user.token]);
 
   const handleSelectCandidate = async (candidateId) => {
     try {
-      console.log(`Selecting candidate with ID: ${candidateId}`);
-      const response = await axios.patch(
+      // Select the candidate
+      await axios.patch(
         'http://localhost:8081/api/jobs/select-candidate',
-        {
-          jobId: jobId,
-          candidateId: candidateId,
-        },
+        { jobId, candidateId },
         {
           headers: {
             'Authorization': `Bearer ${user.token}`,
@@ -44,10 +52,58 @@ const ApplicantFeed = ({ jobId, onClose }) => {
           },
         }
       );
-      console.log('Candidate selected successfully:', response.data);
-      // Optionally, update the state to reflect the selected candidate
+
+      // Close the job
+      await axios.patch(
+        'http://localhost:8081/api/jobs/job-closed',
+        { jobId },
+        {
+          headers: {
+            'Authorization': `Bearer ${user.token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      // Update state to reflect the changes
+      setSelectedCandidateId(candidateId);
+
     } catch (error) {
-      console.error('Error selecting candidate:', error);
+      console.error('Error selecting candidate or closing job:', error);
+    }
+  };
+
+  const handleUnselectCandidate = async () => {
+    try {
+      // Reopen the job
+      await axios.patch(
+        'http://localhost:8081/api/jobs/job-open',
+        { jobId },
+        {
+          headers: {
+            'Authorization': `Bearer ${user.token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      // Unselect the candidate
+      await axios.patch(
+        'http://localhost:8081/api/jobs/select-candidate',
+        { jobId, candidateId: null },
+        {
+          headers: {
+            'Authorization': `Bearer ${user.token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      // Update state to reflect the changes
+      setSelectedCandidateId(null);
+
+    } catch (error) {
+      console.error('Error unselecting candidate or reopening job:', error);
     }
   };
 
@@ -56,9 +112,11 @@ const ApplicantFeed = ({ jobId, onClose }) => {
       {applicants.length > 0 ? (
         applicants.map((applicant) => (
           <ApplicantCard
-            key={applicant.id}
+            key={applicant.userId}
             applicant={applicant}
-            onSelect={handleSelectCandidate} // Pass the selection handler to ApplicantCard
+            isSelected={selectedCandidateId === applicant.userId}
+            onSelect={handleSelectCandidate}
+            onUnselect={handleUnselectCandidate}
           />
         ))
       ) : (

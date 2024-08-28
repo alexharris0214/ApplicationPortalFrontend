@@ -1,8 +1,12 @@
 import React from 'react';
 
-const ApplicantCard = ({ applicant, onSelect }) => {
+const ApplicantCard = ({ applicant, isSelected, onSelect, onUnselect }) => {
   const handleSelect = () => {
-    onSelect(applicant.userId); // Call the passed in onSelect function with the applicant's ID
+    onSelect(applicant.userId);
+  };
+
+  const handleUnselect = () => {
+    onUnselect();
   };
 
   return (
@@ -15,9 +19,15 @@ const ApplicantCard = ({ applicant, onSelect }) => {
           <strong>Download Resume</strong>
         </button>
       </a>
-      <button onClick={handleSelect} className="style-button">
-        <strong>Select Candidate</strong>
-      </button>
+      {isSelected ? (
+        <button onClick={handleUnselect} className="style-button">
+          <strong>Unselect Candidate</strong>
+        </button>
+      ) : (
+        <button onClick={handleSelect} className="style-button">
+          <strong>Select Candidate</strong>
+        </button>
+      )}
     </div>
   );
 };

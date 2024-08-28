@@ -16,7 +16,7 @@ const JobsSelected = () => {
           },
         });
         const filteredJobs = response.data.filter(
-          (job) => job.selectedCandidateId === user.id
+          (job) => job.selectedCandidateId === user.userId
         );
         setSelectedJobs(filteredJobs);
       } catch (error) {
@@ -30,9 +30,10 @@ const JobsSelected = () => {
   return (
     <div>
       <h2>Jobs Selected</h2>
+      <p><strong>If you are selected for a job the HR will reach out to you in due time</strong></p>
       {selectedJobs.length > 0 ? (
         selectedJobs.map((job) => (
-          <div key={job.id}>
+          <div key={job.id} style={jobCardStyles}>
             <h3>{job.jobTitle}</h3>
             <p>{job.jobDescription}</p>
             <p>
@@ -47,5 +48,13 @@ const JobsSelected = () => {
     </div>
   );
 };
+
+const jobCardStyles = {
+    padding: "15px",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    marginBottom: "10px",
+    backgroundColor: "#f9f9f9",
+  };
 
 export default JobsSelected;
