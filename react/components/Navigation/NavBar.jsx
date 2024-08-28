@@ -12,6 +12,9 @@ const NavBar = () => {
         logout()
         navigate('/');
     }
+//     const handleProfileClick = () => {
+//         navigate('/myprofilepage');
+//     }
 return (
     <header>
             <div className='container'>   
@@ -23,7 +26,10 @@ return (
                                                     <Link to="/login">Login</Link>
                                                     <Link to="signup">Sign Up</Link>
                                             </>
-                                    ) : <><Link onClick={handleClick}>Log Out</Link></>}
+                                    ) : <>
+                                        <Link onClick={handleClick}>Log Out</Link>
+                                        <Link to="/myprofilepage">My Profile</Link>
+                                        </>}
                                     
                                     <Link to="/"><h4>Talent Manager</h4></Link>
 

@@ -12,6 +12,7 @@ import Error404Page from "../pages/Error404Page";
 import LandingPage from "../pages/Landing";
 import ManagerPage from "../pages/ManagerPage";
 import JobPostingEditor from "../pages/JobPostingEditor";
+import ProfilePage from "../pages/ProfilePage";
 
 function App() {
   
@@ -25,6 +26,7 @@ function App() {
             <AppRoutes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/manager" element={<ManagerPage />}/>
+              <Route path="/myprofilepage" element = {<ProfilePage />}/>
               <Route path="/manager/edit/:jobId" element={<JobPostingEditor />}/>
               <Route path="/home" element={<PrivateRoute />}>
                 <Route path="/home" element={<HomePage />} />

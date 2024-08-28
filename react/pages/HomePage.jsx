@@ -10,7 +10,7 @@ const HomePage = () => {
   const [data, setData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useContext(AuthContext);
-
+  console.log(user);
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8081/api/jobs/open-jobs");

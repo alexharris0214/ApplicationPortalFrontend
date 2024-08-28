@@ -64,13 +64,13 @@ const JobCard = ({ job, fetchData }) => {
       {user && user.role === 'RECRUITER' && (
         <div>
           <button onClick={handleDelete} className="style-button">
-            <strong>Delete Job Posting</strong>
+            Delete Job Posting
           </button>
           <button onClick={handleEditClick} className='style-button'>
-            <strong>Edit Job Postings</strong>
+            Edit Job Postings
           </button>
           <button onClick={viewApps} className='style-button'>
-            <strong>View Applications</strong>
+            View Applications
           </button>
         </div>
       )}
