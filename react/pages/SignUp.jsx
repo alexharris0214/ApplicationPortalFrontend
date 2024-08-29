@@ -4,12 +4,15 @@ import validation from '../validation.js';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [role, setRole] = useState('CANDIDATE'); 
     const [formError, setFormError] = useState('');
+    const [age, setAge] = useState(0)
     const { signup, error, isLoading } = useSignUp();
 
     const handleSubmit = async (e) => {
@@ -19,7 +22,7 @@ const SignUp = () => {
         try {
             validation.checkEmail(email);
             validation.checkPassword(password, confirmPassword);
-            await signup(firstName, lastName, email, password, role);
+            await signup(firstName, lastName, email, password, role, address, phoneNumber, age);
         } catch (e) {
             setFormError(e);
         }
@@ -49,6 +52,27 @@ const SignUp = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
             />
+            <label>Phone Number:</label>
+            <input
+                type="text"
+                placeholder="123-456-7890"
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                value={phoneNumber}
+            />
+            <label>Address:</label>
+            <input
+                type="text"
+                placeholder="Address"
+                onChange={(e) => setAddress(e.target.value)}
+                value={address}
+            />
+            <label>Age:</label>
+            <input
+                type="text"
+                placeholder="Age"
+                onChange={(e) => setAge(Number(e.target.value))}
+                value={address}
+            />
             <label>Password:</label>
             <input
                 type="password"
@@ -63,7 +87,7 @@ const SignUp = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 value={confirmPassword}
             />
-            <label>Select Role:</label>
+            {/* <label>Select Role:</label>
             <div>
             <select
                 value={role}
@@ -72,7 +96,7 @@ const SignUp = () => {
                 <option value="CANDIDATE">Candidate</option>
                 <option value="RECRUITER">Recruiter</option>
             </select>
-            </div>
+            </div> */}
             <button disabled={isLoading} type="submit">Sign Up</button>
             {formError && <div className='error'>{formError.toString()}</div>}
             {error && <div className='error'>{error.message}</div>}

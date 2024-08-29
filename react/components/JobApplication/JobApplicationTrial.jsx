@@ -1,104 +1,109 @@
-import React, { useState } from 'react';
-import AWS from 'aws-sdk';
+import { useState, useContext } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
 
-const JobApplicationTrial = () => {
-    const [coverLetter, setCoverLetter] = useState('');
-    const [resume, setResume] = useState(null);
-    const [uploading, setUploading] = useState(false);
+const JobApplicationTrial = ({ job, onClose }) => {
+  const [coverLetter, setCoverLetter] = useState('');
+  const [resumeFile, setResumeFile] = useState(null); // Use to store the file
+  const { user } = useContext(AuthContext);
 
-    // Configure AWS SDK
-    AWS.config.update({
-        region: 'your-region', // e.g., 'us-east-1'
-        accessKeyId: 'your-access-key-id',
-        secretAccessKey: 'your-secret-access-key',
-    });
+  const handleFileChange = (e) => {
+    setResumeFile(e.target.files[0]);
+  };
 
-    const s3 = new AWS.S3();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleFileChange = (event) => {
-        setResume(event.target.files[0]);
+    if (!user) {
+      alert('You must be logged in to apply.');
+      return;
+    }
+
+    let uploadedFileUrl = ''; // Local variable for the resume URL
+
+    if (resumeFile) {
+      try {
+        // Get pre-signed URL from the backend
+        console.log('Requesting pre-signed URL...');
+        const response = await axios.get('http://localhost:8083/api/resume/upload-presigned-url', {
+          headers: {
+            'Authorization': `Bearer ${user.token}`, 
+          },
+        });
+        console.log('Received pre-signed URL:', response.data);
+        const presignedUrl = response.data;
+
+        // Upload the file to S3 using the pre-signed URL
+        console.log('Uploading resume to S3...');
+        await axios.put(presignedUrl, resumeFile, {
+          headers: {
+            'Content-Type': resumeFile.type,
+          },
+        });
+        console.log('Resume uploaded to S3 successfully.');
+
+        // Extract the file URL from the presigned URL (depends on how your backend generates it)
+        uploadedFileUrl = presignedUrl.split('?')[0];
+        console.log('Uploaded file URL:', uploadedFileUrl);
+
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        return;
+      }
+    }
+
+    const applicationData = {
+      userId: user.userId,
+      jobId: job.id,
+      dateApplied: new Date().toISOString(),
+      coverLetter,
+      resume: uploadedFileUrl, // Use the local variable for the resume URL
+      open: true,
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setUploading(true);
+    console.log('Application data to be submitted:', JSON.stringify(applicationData, null, 2));
 
-        if (!resume) {
-            alert('Please upload your resume.');
-            setUploading(false);
-            return;
+    // Post the application data with JWT in headers
+    try {
+      console.log('Submitting application data...');
+      const response = await axios.post(
+        'http://localhost:8082/api/applications/create-application',
+        applicationData,
+        {
+          headers: {
+            'Authorization': `Bearer ${user.token}`,
+            'Content-Type': 'application/json',
+          },
         }
+      );
+      console.log('Application submitted successfully:', response.data);
+    } catch (error) {
+      console.error('Error submitting application:', error);
+    }
 
-        try {
-            // Step 1: Generate a pre-signed URL for S3
-            const params = {
-                Bucket: 'your-s3-bucket-name',
-                Key: `resumes/${resume.name}`, // File name
-                Expires: 60, // URL expires in 60 seconds
-                ContentType: resume.type,
-            };
+    onClose(); // Close the modal after submission
+  };
 
-            const presignedUrl = await s3.getSignedUrlPromise('putObject', params);
+  return (
+    <div className="modal">
+      <form className="job-application" onSubmit={handleSubmit}>
+        <h3>Job Application</h3>
 
-            // Step 2: Upload file to S3 using the pre-signed URL
-            await axios.put(presignedUrl, resume, {
-                headers: {
-                    'Content-Type': resume.type,
-                },
-            });
+        <label>Cover Letter:</label>
+        <textarea
+          placeholder="Write your cover letter here"
+          value={coverLetter}
+          onChange={(e) => setCoverLetter(e.target.value)}
+        ></textarea>
 
-            const fileUrl = presignedUrl.split('?')[0]; // URL without the query string
+        <label>Resume (PDF or DOC):</label>
+        <input type="file" accept=".pdf,.doc,.docx" onChange={handleFileChange} />
 
-            // Step 3: Create the request body
-            const requestBody = {
-                coverLetter: coverLetter,
-                resumeUrl: fileUrl,
-            };
-
-            // Step 4: Console log the request body (simulating sending it to the database)
-            console.log('Request Body:', requestBody);
-
-            alert('File uploaded successfully! Check the console for the request body.');
-
-        } catch (error) {
-            console.error('Error uploading file:', error);
-            alert('Failed to upload the file.');
-        } finally {
-            setUploading(false);
-        }
-    };
-
-    return (
-        <div>
-            <h2>Job Application Trial</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Cover Letter:</label>
-                    <textarea
-                        value={coverLetter}
-                        onChange={(e) => setCoverLetter(e.target.value)}
-                        placeholder="Enter your cover letter"
-                        required
-                    />
-                </div>
-
-                <div>
-                    <label>Upload Resume:</label>
-                    <input
-                        type="file"
-                        onChange={handleFileChange}
-                        accept=".pdf"
-                        required
-                    />
-                </div>
-
-                <button type="submit" disabled={uploading}>
-                    {uploading ? 'Uploading...' : 'Submit Application'}
-                </button>
-            </form>
-        </div>
-    );
+        <button type="submit">Submit Application</button>
+        <button type="button" onClick={onClose}>Close</button>
+      </form>
+    </div>
+  );
 };
 
 export default JobApplicationTrial;

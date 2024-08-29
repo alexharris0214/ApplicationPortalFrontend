@@ -1,33 +1,50 @@
 import { useState, useContext } from 'react';
+import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
+
 const JobApplication = ({ job, onClose }) => {
   const [coverLetter, setCoverLetter] = useState('');
   const [resume, setResume] = useState('');
   const { user } = useContext(AuthContext); // Get the userId from context
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    console.log("Checking user context from job app", user);
-    let userId = user.userId;
+
+    if (!user) {
+      alert('You must be logged in to apply.');
+      return;
+    }
 
     const applicationData = {
-      userId,
-      jobId: job.jobId, 
-      dateApplied: new Date(),
+      userId: user.userId, // Adjusted to match the request body format
+      jobId: job.id, // Ensure this is the correct field from job object
+      dateApplied: new Date().toISOString(), // Ensure date is in the correct format
       coverLetter,
       resume,
       open: true,
     };
 
+    console.log("Checking user context from job app", user);
     console.log(JSON.stringify(applicationData, null, 2));
 
     // Close the modal after submission
     onClose();
 
-    // Future implementation: Replace with actual API call
-    // axios.post('your-api-url-here', applicationData)
-    //   .then(response => console.log(response))
-    //   .catch(error => console.error(error));
+    // Post the application data with JWT in headers
+    axios.post('http://localhost:8082/api/applications/create-application', applicationData, {
+      headers: {
+        'Authorization': `Bearer ${user.token}`, // Assuming user.token contains the JWT
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => {
+        console.log('Application submitted:', response.data);
+        // Handle success response
+      })
+      .catch(error => {
+        console.error('Error submitting application:', error);
+        // Handle error response
+      });
   };
 
   return (

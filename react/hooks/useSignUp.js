@@ -7,7 +7,7 @@ const useSignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useAuthContext();
 
-  const signup = async (firstName, lastName, email, password, role) => {
+  const signup = async (firstName, lastName, email, password, role, address, phoneNumber, age) => {
     setIsLoading(true);
     setError(null);
 
@@ -16,6 +16,9 @@ const useSignUp = () => {
       lastName,
       email,
       password,
+      age,
+      phoneNumber,
+      address,
       role,
     };
 
@@ -35,10 +38,11 @@ const useSignUp = () => {
       const json = response.data;
       if (json) {
         // Save the user to local storage
-        localStorage.setItem("token", json.token);
+        localStorage.setItem("user", JSON.stringify(json));
+        //localStorage.setItem("token", json.token);
 
         // Update the auth context
-        dispatch({ type: "LOGIN", payload: { token: json.token } });
+        dispatch({ type: "LOGIN", payload: json });
       }
     } catch (error) {
       // Log the error message
