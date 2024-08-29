@@ -51,53 +51,36 @@ const JobCard = ({ job, fetchData }) => {
   };
 
   return (
-    <div className="card" style={styles.card}>
-      {/* {job.id && <h3>Job ID: {job.id}</h3>} */}
-      {job.listingTitle && <h3>{job.listingTitle}</h3>}
-      {job.jobTitle && <h3><strong>Position Title:</strong> {job.jobTitle}</h3>}
-      {/* {job.managerId && <p><strong>Manager ID:</strong> {job.managerId}</p>} */}
-      {job.dateListed && <p><strong>Date Listed:</strong> {new Date(job.dateListed).toLocaleDateString()}</p>}
-      {job.dateClosed && <p><strong>Date Closed:</strong> {job.dateClosed ? new Date(job.dateClosed).toLocaleDateString() : 'N/A'}</p>}
-      {job.positionCategory && <p><strong>Category:</strong> {job.positionCategory}</p>}
-      {job.openStatus && <p><strong>Status:</strong> {job.openStatus ? 'Open' : 'Closed'}</p>}
-      {job.state && <p><strong>State:</strong> {job.state}</p>} 
-      {job.city && <p><strong>City:</strong> {job.city}</p>} 
-      {job.jobDescription && <p><strong>Description:</strong> {job.jobDescription}</p>}
-      
+    <div className="card">
+      <div className="card-header">
+        {job.listingTitle && <h3 className="job-title">{job.listingTitle}</h3>}
+        {job.jobTitle && <h4 className="position-title"><strong>Position Title:</strong> {job.jobTitle}</h4>}
+      </div>
+      <div className="card-body">
+        {job.dateListed && <p><strong>Date Listed:</strong> {new Date(job.dateListed).toLocaleDateString()}</p>}
+        {job.dateClosed && <p><strong>Date Closed:</strong> {job.dateClosed ? new Date(job.dateClosed).toLocaleDateString() : 'N/A'}</p>}
+        {job.positionCategory && <p><strong>Category:</strong> {job.positionCategory}</p>}
+        {job.openStatus && <p><strong>Status:</strong> {job.openStatus ? 'Open' : 'Closed'}</p>}
+        {job.state && <p><strong>State:</strong> {job.state}</p>} 
+        {job.city && <p><strong>City:</strong> {job.city}</p>} 
+        {job.jobDescription && <p><strong>Description:</strong> {job.jobDescription}</p>}
+      </div>
+      <div className="card-footer">
+        {user && user.role === 'RECRUITER' && user.userId === job.managerId ? (
+          <div className="button-group">
+            <button onClick={handleDelete} className="style-button">Delete Job Posting</button>
+            <button onClick={handleEditClick} className='style-button'>Edit Job Postings</button>
+            <button onClick={viewApps} className='style-button'>View Applications</button>
+          </div>
+        ) : null}
 
-      {user && user.role === 'RECRUITER' && user.userId === job.managerId ?(
-        <div>
-          <button onClick={handleDelete} className="style-button">
-            Delete Job Posting
-          </button>
-          <button onClick={handleEditClick} className='style-button'>
-            Edit Job Postings
-          </button>
-          <button onClick={viewApps} className='style-button'>
-            View Applications
-          </button>
-        </div>
-      ):<></>}
+        {user && user.role === 'CANDIDATE' && (
+          <button onClick={handleApplyClick} className='style-button'>Apply</button>
+        )}
+      </div>
 
-      {user && user.role === 'CANDIDATE' && (
-        <button onClick={handleApplyClick} className='style-button'>Apply</button>
-      )}
-
-      {isModalOpen && (
-        <JobApplicationTrial 
-          job={job} 
-          onClose={handleCloseModal} 
-        />
-      )}
-
-      {isEditModalOpen && (
-        <EditJobModal
-          isOpen={isEditModalOpen} 
-          job={job}
-          onClose={handleCloseEditModal}
-        />
-      )}
-
+      {isModalOpen && <JobApplicationTrial job={job} onClose={handleCloseModal} />}
+      {isEditModalOpen && <EditJobModal isOpen={isEditModalOpen} job={job} onClose={handleCloseEditModal} />}
       {isApplicantFeedOpen && (
         <div className="modal" style={modalStyles}>
           <ApplicantFeed jobId={job.id} onClose={handleCloseApplicantFeed} />
@@ -105,17 +88,6 @@ const JobCard = ({ job, fetchData }) => {
       )}
     </div>
   );
-};
-
-const styles = {
-  card: {
-    backgroundColor: 'white',
-    border: '1px solid black',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-    padding: '16px',
-    margin:'12px',
-    borderRadius:"12px"
-  },
 };
 
 const modalStyles = {
