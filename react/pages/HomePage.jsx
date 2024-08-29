@@ -44,7 +44,7 @@ const HomePage = () => {
   
   return (
     <div>
-      <p>Welcome {loggedInUser.firstName}</p>
+      <p>Welcome {loggedInUser.firstName}!</p>
       <div style={{ padding: '20px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
         <h1>Job Board</h1>
         {user && user.role === 'RECRUITER' && (
