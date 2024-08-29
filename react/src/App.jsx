@@ -21,22 +21,15 @@ function App() {
 
        <AuthContextProvider>
           <div>
-
-              <NavBar />
-
+            <NavBar />
             <AppRoutes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/manager" element={<ManagerPage />}/>
               <Route path="/manager/edit/:jobId" element={<JobPostingEditor />}/>
-
               <Route path='/admin' element={<PrivateRoute />}>
                 <Route path='/admin' element={<AdminDashboard />}/>
               </Route>
-
               <Route path='myprofilepage' element={<ProfilePage/>}/>
-
-
-
               <Route path="/home" element={<PrivateRoute />}>
                 <Route path="/home" element={<HomePage />} />
               </Route>
