@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext} from 'react';
 import axios from 'axios';
 import JobCard from './JobCard'; // Import the JobCard component
-import { jobData } from './JobData'; // Import the job data
+//import { jobData } from './JobData'; // Import the job data
 import StateDropdown from '../JobApplication/StateDropDown';
-
+import { AuthContext } from "../../context/AuthContext";
 
 const JobFeed = () => {
   const [jobs, setJobs] = useState([]);
@@ -11,6 +11,25 @@ const JobFeed = () => {
   const [jobState, setJobState] = useState(''); 
   const [jobCategory, setJobCategory] = useState('');
   const [filteredJobs, setFilteredJobs] = useState([]);
+  const [appliedJobIds, setAppliedJobIds] = useState([]);
+  const { user } = useContext(AuthContext);
+  const fetchAppliedJobs = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8082/api/applications/get-for-candidate/${user.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const appliedJobIds = response.data.map((application) => application.jobId);
+      setAppliedJobIds(appliedJobIds);
+    } catch (error) {
+      console.error('Error fetching applied jobs:', error);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -41,6 +60,9 @@ const JobFeed = () => {
 
   useEffect(() => {
     fetchData();
+    if(user){
+    fetchAppliedJobs();
+    }
   }, []);
 
 
@@ -67,7 +89,7 @@ const JobFeed = () => {
       </form>
 
       {filteredJobs.map((job) => (
-        <JobCard key={job.id || job.listingTitle} job={job} fetchData={fetchData}/>
+        <JobCard key={job.id || job.listingTitle} job={job} fetchData={fetchData} fetchAppliedJobs={fetchAppliedJobs} appliedJobIds={appliedJobIds}/>
       ))}
     </div>
   );
