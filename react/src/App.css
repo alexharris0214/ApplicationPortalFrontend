@@ -33,8 +33,85 @@
   }
 }
 
+/* cards styling */
+
+
 .card {
-  padding: 2em;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 12px;
+  border-radius: 12px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+  margin-bottom: 10px;
+}
+
+.job-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0;
+}
+
+.position-title {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.card-body {
+  flex-grow: 1;
+  margin-bottom: 10px;
+}
+
+.card-body p {
+  margin: 5px 0;
+  color: #444;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
+.style-button {
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 8px 12px; /* Reduced padding for a smaller button */
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: center;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform for hover effect */
+  font-size: 1rem; /* Consistent font size */
+}
+
+.style-button:hover {
+  background-color: #138b72;
+  transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+.card-footer {
+  display: flex;
+  justify-content: center; /* Center the button */
+  align-items: center;
+  margin-top: 10px; /* Add some space above the footer */
 }
 
 .read-the-docs {
@@ -97,14 +174,7 @@ form.signup,form.login {
 .approval-section {
   margin-top: 40px;
 }
-.search-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  align-content: space-evenly;
 
-}
 .section-title {
   font-size: 1.8rem;
   color: #333;
@@ -244,7 +314,7 @@ form.signup,form.login {
 
 .submit-btn {
   width: 100%;
-  background-color: #4CAF50;
+  background-color: #1aac83;
   color: white;
   border: none;
   padding: 10px;
@@ -254,7 +324,7 @@ form.signup,form.login {
 }
 
 .submit-btn:hover {
-  background-color: #45a049;
+  background-color: #48d6ae;
 }
 
 .message {
@@ -262,4 +332,79 @@ form.signup,form.login {
   text-align: center;
   font-size: 1.1rem;
   color: green;
+}
+
+/* job-application modal styling */
+
+.modal{
+  display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+}
+
+.job-application {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  width: 100%;
+  max-width: 400px; /* Reduced size for application menu */
+}
+
+.job-application h3 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center; /* Center the title */
+}
+
+.job-application label {
+  margin-top: 10px;
+  display: block;
+  font-weight: bold;
+  color: #555;
+}
+
+.job-application textarea {
+  width: 80%;
+  height: 80px; /* Reduced height */
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px; /* Space between textareas and buttons */
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0.2, 0.2, 0.2, 0.1);
+  resize: none; /* Prevent resizing */
+}
+
+.job-application input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px; /* Space between input and buttons */
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.job-application button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 10px; /* Space above buttons */
+  margin-right: 10px; /* Space between buttons */
+  width: calc(50% - 5px); /* Adjust width for spacing */
+}
+
+.job-application button:last-child {
+  margin-right: 0; /* Remove right margin from the last button */
+}
+
+.job-application button:hover {
+  background-color: #138b72;
+  transform: scale(1.05); /* Slightly increase size on hover */
 }

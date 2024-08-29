@@ -9,20 +9,42 @@ const JobsApplied = () => {
   useEffect(() => {
     const fetchAppliedJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/api/jobs/open-jobs", {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-            "Content-Type": "application/json",
-          },
-        });
-        setAppliedJobs(response.data);
+        // Step 1: Fetch applications for the candidate
+        const applicationsResponse = await axios.get(
+          `http://localhost:8082/api/applications/get-for-candidate/${user.userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const applications = applicationsResponse.data;
+
+        // Step 2: Fetch job details for each jobId
+        const jobDetailsPromises = applications.map((application) =>
+          axios.get(`http://localhost:8081/api/jobs/${application.jobId}`, {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              "Content-Type": "application/json",
+            },
+          })
+        );
+
+        const jobDetailsResponses = await Promise.all(jobDetailsPromises);
+
+        // Step 3: Store job details in state
+        const jobDetails = jobDetailsResponses.map((response) => response.data);
+        setAppliedJobs(jobDetails);
+
       } catch (error) {
         console.error("Error fetching applied jobs:", error);
       }
     };
 
     fetchAppliedJobs();
-  }, [user.token]);
+  }, [user.userId, user.token]);
 
   return (
     <div>
@@ -31,8 +53,8 @@ const JobsApplied = () => {
         appliedJobs.map((job) => (
           <div key={job.id} style={jobCardStyles}>
             <h3>{job.jobTitle}</h3>
-            <p>{job.jobDescription}</p>
-            <p><strong>Date Applied:</strong> {new Date(job.dateApplied).toLocaleDateString()}</p>
+            <p><strong>Description: </strong>{job.jobDescription}</p>
+            {/* <p><strong>Date Applied:</strong> {new Date(job.dateApplied).toLocaleDateString()}</p> */}
           </div>
         ))
       ) : (

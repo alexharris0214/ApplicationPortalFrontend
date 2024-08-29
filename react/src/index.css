@@ -98,6 +98,66 @@ header a {
   margin-bottom: 20px;
 }
 
+.search-container {
+  /* display: flex; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* align-items: center; */
+  gap: 10px; /*Space between input, dropdown, and button
+  /* margin-bottom: 20px; */
+  width: 100%;
+  /* justify-content: center; */
+  /* justify-items: center; */
+  /* align-content: center; */
+  /* background-color: red; */
+}
+
+.search-input {
+  flex-grow: 1.5; /* Decreased size of the search bar */
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.search-dropdown {
+  flex-grow: 2.5; /* Increased size of the state filter */
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.search-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  background-color: #1aac83; /* Green button color to match the UI */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.search-button:hover {
+  background-color: #218838; /* Darker green for hover effect */
+}
+
+.state-select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+
 .menu-tab-container {
   margin-top: 30px;
   padding: 30px;
@@ -272,13 +332,37 @@ form.signup, form.login {
   border-radius: 4px;
 }
 
-.style-button{
+/* .style-button{
   background: #fff;
   color: var(--primary);
   border: 2px solid var(--primary);
   padding: 6px 10px;
   border-radius: 4px;
   font-family: "Poppins";
+  width: 150px;
   cursor: pointer;
   font-size: 1em;
+} */
+
+.style-button {
+  background: #fff; /* Keep the background white */
+  color: var(--primary); /* Use the primary color for text */
+  border: 2px solid var(--primary); /* Solid border matching primary color */
+  padding: 8px 12px; /* Slightly increased padding for better click area */
+  border-radius: 6px; /* More rounded corners for a modern look */
+  font-family: "Poppins", sans-serif; /* Ensure fallback font */
+  width: 150px; /* Fixed width */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Base font size */
+  transition: background 0.3s, color 0.3s; /* Smooth transition for hover effect */
+}
+
+.style-button:hover {
+  background: var(--primary); /* Change background on hover */
+  color: #fff; /* Change text color to white on hover */
+}
+
+.style-button:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for focus indication */
 }
