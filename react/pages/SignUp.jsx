@@ -12,6 +12,7 @@ const SignUp = () => {
     const [lastName, setLastName] = useState('');
     const [role, setRole] = useState('CANDIDATE'); 
     const [formError, setFormError] = useState('');
+    const [age, setAge] = useState(0)
     const { signup, error, isLoading } = useSignUp();
 
     const handleSubmit = async (e) => {
@@ -21,7 +22,7 @@ const SignUp = () => {
         try {
             validation.checkEmail(email);
             validation.checkPassword(password, confirmPassword);
-            await signup(firstName, lastName, email, password, role);
+            await signup(firstName, lastName, email, password, role, address, phoneNumber, age);
         } catch (e) {
             setFormError(e);
         }
@@ -63,6 +64,13 @@ const SignUp = () => {
                 type="text"
                 placeholder="Address"
                 onChange={(e) => setAddress(e.target.value)}
+                value={address}
+            />
+            <label>Age:</label>
+            <input
+                type="text"
+                placeholder="Age"
+                onChange={(e) => setAge(Number(e.target.value))}
                 value={address}
             />
             <label>Password:</label>

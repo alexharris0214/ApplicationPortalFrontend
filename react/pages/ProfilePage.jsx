@@ -15,8 +15,6 @@ const ProfilePage = () => {
             Authorization: `Bearer ${user.token}`, // Use token from user object
           },
         });
-        console.log(response.data)
-
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
