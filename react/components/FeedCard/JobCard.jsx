@@ -143,8 +143,8 @@ const JobCard = ({ job, fetchData, fetchAppliedJobs ,appliedJobIds }) => {
         />
       )}
 
-      {isModalOpen && <JobApplicationTrial job={job} onClose={handleCloseModal} />}
-      {isEditModalOpen && <EditJobModal isOpen={isEditModalOpen} job={job} onClose={handleCloseEditModal} />}
+
+
       {isApplicantFeedOpen && (
         <div className="modal" style={modalStyles}>
           <ApplicantFeed jobId={job.id} onClose={handleCloseApplicantFeed} />

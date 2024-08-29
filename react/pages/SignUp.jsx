@@ -22,7 +22,7 @@ const SignUp = () => {
         try {
             validation.checkEmail(email);
             validation.checkPassword(password, confirmPassword);
-            await signup(firstName, lastName, email, password, role, address, phoneNumber, age);
+            await signup(firstName, lastName, email, password, role, address, phoneNumber, Number(age));
         } catch (e) {
             setFormError(e);
         }
@@ -70,8 +70,8 @@ const SignUp = () => {
             <input
                 type="text"
                 placeholder="Age"
-                onChange={(e) => setAge(Number(e.target.value))}
-                value={address}
+                onChange={(e) => setAge(e.target.value)}
+                value={age}
             />
             <label>Password:</label>
             <input

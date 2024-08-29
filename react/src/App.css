@@ -97,6 +97,7 @@
   padding: 8px 12px; /* Reduced padding for a smaller button */
   border-radius: 6px;
   cursor: pointer;
+  align-self: center;
   transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform for hover effect */
   font-size: 1rem; /* Consistent font size */
 }
