@@ -11,7 +11,7 @@ const ApplicantCard = ({ applicant, isSelected, onSelect, onUnselect }) => {
     onSelect(applicant.userId);
   };
   useEffect(() => {
-    getUserInfo(user.userId)
+    getUserInfo(applicant.userId)
   }, [user])
   const handleUnselect = () => {
     onUnselect();
