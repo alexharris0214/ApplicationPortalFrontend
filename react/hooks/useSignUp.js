@@ -7,7 +7,7 @@ const useSignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useAuthContext();
 
-  const signup = async (firstName, lastName, email, password, role) => {
+  const signup = async (firstName, lastName, email, password, role, address, phoneNumber, age) => {
     setIsLoading(true);
     setError(null);
 
@@ -16,6 +16,9 @@ const useSignUp = () => {
       lastName,
       email,
       password,
+      age,
+      phoneNumber,
+      address,
       role,
     };
 
