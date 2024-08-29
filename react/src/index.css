@@ -99,11 +99,19 @@ header a {
 }
 
 .search-container {
+  /* display: flex; */
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  gap: 10px; /* Space between input, dropdown, and button */
-  margin-bottom: 20px;
+  /* align-items: center; */
+  gap: 10px; /*Space between input, dropdown, and button
+  /* margin-bottom: 20px; */
   width: 100%;
+  /* justify-content: center; */
+  /* justify-items: center; */
+  /* align-content: center; */
+  /* background-color: red; */
 }
 
 .search-input {
@@ -140,7 +148,7 @@ header a {
   background-color: #218838; /* Darker green for hover effect */
 }
 
-#state-select {
+.state-select {
   width: 100%;
   padding: 10px;
   font-size: 16px;

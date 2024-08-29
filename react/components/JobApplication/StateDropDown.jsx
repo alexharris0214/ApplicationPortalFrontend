@@ -8,9 +8,9 @@ const StateDropdown = ({ setStateSetter, placeholder }) => {
   };
 
   return (
-    <div style={{width:"100%"}}>
+    <div style={{maxWidth:"20%"}}>
 
-      <select id="state-select" name="states" onChange={handleChange}>
+      <select className="state-select" name="states" onChange={handleChange}>
         <option value="">{placeholder}</option>
         {states.map((state) => (
           <option key={state.abbreviation} value={state.abbreviation}>
