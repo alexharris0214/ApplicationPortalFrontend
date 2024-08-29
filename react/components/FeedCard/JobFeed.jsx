@@ -8,7 +8,7 @@ import StateDropdown from '../JobApplication/StateDropDown';
 const JobFeed = () => {
   const [jobs, setJobs] = useState([]);
   const [jobTitle, setJobTitle] = useState('');
-  const [jobState, setJobState] = useState('');
+  const [jobState, setJobState] = useState(''); 
   const [jobCategory, setJobCategory] = useState('');
   const [filteredJobs, setFilteredJobs] = useState([]);
 
@@ -28,9 +28,14 @@ const JobFeed = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault(); // Prevent form submission
-    const filtered = jobs.filter((job) =>
+    let filtered = jobs.filter((job) =>
       job.jobTitle.toLowerCase().includes(jobTitle.toLowerCase())
     );
+    if(jobState!= ''){
+      filtered = filtered.filter((job) =>  
+        job.state == jobState
+      );
+    }
     setFilteredJobs(filtered);
   };
 
@@ -57,6 +62,7 @@ const JobFeed = () => {
             setStateSetter={}  
           </CategoryDropdown>          */}
           <button type="submit">Search</button>
+
         </div>
       </form>
 

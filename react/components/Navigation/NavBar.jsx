@@ -15,7 +15,7 @@ const NavBar = () => {
 
     return (
         <header className="navbar-header">
-
+            <div className="navbar-container">
                 <div className="navbar-logo">
                     {!user ? (
                         <Link to="/">
@@ -40,7 +40,7 @@ const NavBar = () => {
                         </>
                     )}
                 </nav>
-
+            </div>
         </header>
     );
 };

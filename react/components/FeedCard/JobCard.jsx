@@ -60,7 +60,10 @@ const JobCard = ({ job, fetchData }) => {
       {job.dateClosed && <p><strong>Date Closed:</strong> {job.dateClosed ? new Date(job.dateClosed).toLocaleDateString() : 'N/A'}</p>}
       {job.positionCategory && <p><strong>Category:</strong> {job.positionCategory}</p>}
       {job.openStatus && <p><strong>Status:</strong> {job.openStatus ? 'Open' : 'Closed'}</p>}
+      {job.state && <p><strong>State:</strong> {job.state}</p>} 
+      {job.city && <p><strong>City:</strong> {job.city}</p>} 
       {job.jobDescription && <p><strong>Description:</strong> {job.jobDescription}</p>}
+      
 
       {user && user.role === 'RECRUITER' && user.userId === job.managerId ?(
         <div>
