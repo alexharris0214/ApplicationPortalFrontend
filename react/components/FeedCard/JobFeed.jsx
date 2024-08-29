@@ -11,7 +11,6 @@ const JobFeed = () => {
   const [jobState, setJobState] = useState(''); 
   const [jobCategory, setJobCategory] = useState('');
   const [filteredJobs, setFilteredJobs] = useState([]);
-<<<<<<< HEAD
   const [appliedJobIds, setAppliedJobIds] = useState([]);
   const { user } = useContext(AuthContext);
   const fetchAppliedJobs = async () => {
@@ -32,14 +31,12 @@ const JobFeed = () => {
     }
   };
 
-=======
   const categories = [
     {"name": "Developer", "abbreviation": "DEVELOPER"},
     {"name": "Sales", "abbreviation": "SALES"},
     {"name": "Human Resources", "abbreviation": "HR"},
     {"name": "Operations", "abbreviation": "OPERATIONS"},
   ]
->>>>>>> b36e210aad95a4680a671eafd3afe509191d050f
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8081/api/jobs/open-jobs");
@@ -117,17 +114,10 @@ const JobFeed = () => {
         </div>
     </form>
 
-<<<<<<< HEAD
       {filteredJobs.map((job) => (
         <JobCard key={job.id || job.listingTitle} job={job} fetchData={fetchData} fetchAppliedJobs={fetchAppliedJobs} appliedJobIds={appliedJobIds}/>
       ))}
     </div>
-=======
-    {filteredJobs.map((job) => (
-        <JobCard key={job.id || job.listingTitle} job={job} fetchData={fetchData} />
-    ))}
-</div>
->>>>>>> b36e210aad95a4680a671eafd3afe509191d050f
   );
 };
 

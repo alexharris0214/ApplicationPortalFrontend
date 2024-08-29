@@ -56,7 +56,6 @@ const JobCard = ({ job, fetchData, fetchAppliedJobs ,appliedJobIds }) => {
   };
 
   return (
-<<<<<<< HEAD
     <div className="card" style={styles.card}>
       {/* {job.id && <h3>Job ID: {job.id}</h3>} */}
       {job.listingTitle && <h3>{job.listingTitle}</h3>}
@@ -143,35 +142,6 @@ const JobCard = ({ job, fetchData, fetchAppliedJobs ,appliedJobIds }) => {
           onClose={handleCloseEditModal}
         />
       )}
-=======
-    <div className="card">
-      <div className="card-header">
-        {job.listingTitle && <h3 className="job-title">{job.listingTitle}</h3>}
-        {job.jobTitle && <h4 className="position-title"><strong>Position Title:</strong> {job.jobTitle}</h4>}
-      </div>
-      <div className="card-body">
-        {job.dateListed && <p><strong>Date Listed:</strong> {new Date(job.dateListed).toLocaleDateString()}</p>}
-        {job.dateClosed && <p><strong>Date Closed:</strong> {job.dateClosed ? new Date(job.dateClosed).toLocaleDateString() : 'N/A'}</p>}
-        {job.positionCategory && <p><strong>Category:</strong> {job.positionCategory}</p>}
-        {job.openStatus && <p><strong>Status:</strong> {job.openStatus ? 'Open' : 'Closed'}</p>}
-        {job.state && <p><strong>State:</strong> {job.state}</p>} 
-        {job.city && <p><strong>City:</strong> {job.city}</p>} 
-        {job.jobDescription && <p><strong>Description:</strong> {job.jobDescription}</p>}
-      </div>
-      <div className="card-footer">
-        {user && user.role === 'RECRUITER' && user.userId === job.managerId ? (
-          <div className="button-group">
-            <button onClick={handleDelete} className="style-button">Delete Job Posting</button>
-            <button onClick={handleEditClick} className='style-button'>Edit Job Postings</button>
-            <button onClick={viewApps} className='style-button'>View Applications</button>
-          </div>
-        ) : null}
-
-        {user && user.role === 'CANDIDATE' && (
-          <button onClick={handleApplyClick} className='style-button'>Apply</button>
-        )}
-      </div>
->>>>>>> b36e210aad95a4680a671eafd3afe509191d050f
 
       {isModalOpen && <JobApplicationTrial job={job} onClose={handleCloseModal} />}
       {isEditModalOpen && <EditJobModal isOpen={isEditModalOpen} job={job} onClose={handleCloseEditModal} />}
@@ -184,7 +154,6 @@ const JobCard = ({ job, fetchData, fetchAppliedJobs ,appliedJobIds }) => {
   );
 };
 
-<<<<<<< HEAD
 const styles = {
   card: {
     backgroundColor: "white",
@@ -196,8 +165,6 @@ const styles = {
   },
 };
 
-=======
->>>>>>> b36e210aad95a4680a671eafd3afe509191d050f
 const modalStyles = {
   backgroundColor: "rgba(0, 0, 0, 0.5)",
   position: "fixed",
