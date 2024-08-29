@@ -135,6 +135,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex:10
   },
   modal: {
     backgroundColor: 'white',

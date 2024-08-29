@@ -56,7 +56,7 @@ const JobCard = ({ job, fetchData, fetchAppliedJobs ,appliedJobIds }) => {
   };
 
   return (
-    <div className="card" style={styles.card}>
+    <div className="card">
       {/* {job.id && <h3>Job ID: {job.id}</h3>} */}
       {job.listingTitle && <h3>{job.listingTitle}</h3>}
       {job.jobTitle && (
@@ -156,18 +156,19 @@ const JobCard = ({ job, fetchData, fetchAppliedJobs ,appliedJobIds }) => {
 
 const styles = {
   card: {
-    backgroundColor: "white",
+    backgroundColor: "red",
     border: "1px solid black",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
     padding: "16px",
     margin: "12px",
     borderRadius: "12px",
+    zIndex:0
   },
 };
 
 const modalStyles = {
   backgroundColor: "rgba(0, 0, 0, 0.5)",
-  position: "fixed",
+
   top: 0,
   left: 0,
   right: 0,
